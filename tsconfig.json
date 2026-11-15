@@ -28,26 +28,22 @@
       ]
     },
     "types": [
-      "node",
-      "@cloudflare/workers-types"
+      "node"
     ]
   },
   "include": [
     "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "components/portfolio/**/*.ts",
+    "components/portfolio/**/*.tsx",
+    "db/**/*.ts",
     ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
-    "examples",
-    "dist",
-    ".vinext",
-    ".wrangler",
-    ".sites-runtime",
-    "outputs",
-    "work"
+    ".next/cache",
+    "tests"
   ]
 }

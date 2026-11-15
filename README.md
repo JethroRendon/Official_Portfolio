@@ -1,17 +1,71 @@
-# Jethro A. Rendon — Developer Portfolio
+# Jethro A. Rendon — Vercel portfolio
 
-A React + TypeScript developer portfolio based on the supplied IDE-inspired design. Built with Vinext, Tailwind CSS, Lucide icons, CSS animations, and Cloudflare Workers with a D1 contact inbox.
+This version uses standard Next.js on Vercel. It keeps the portfolio design, always-visible explorer, résumé content, selected profile image, animations, and project navigation. The floating character remains removed.
 
-## Content and navigation
+## Vercel deployment
 
-Portfolio identity, photograph, education, projects, experience, certifications, skills, and contact details are based on Jethro Rendon's supplied résumé. `components/portfolio/data.ts` holds the project, skill, and experience data. A downloadable copy is served at `/Jethro_Rendon_Resume.pdf`.
+1. Replace the contents of your Vercel-linked repository with the contents of this folder. Keep `package.json`, `package-lock.json`, `next.config.ts`, and `vercel.json` together at the project root.
+2. Commit and push the files.
+3. In Vercel, choose **Next.js** as the Framework Preset.
+4. Use **npm run build** as the Build Command and **npm ci** as the Install Command.
+5. Reset any custom Output Directory to the Next.js default (`.next`). Do not use `dist`, `out`, or `dist/server`.
+6. Use Node.js 22.x or 24.x. Set Root Directory to the folder containing this `package.json`; leave it empty if these files are at your repository root.
+7. Redeploy. Disable “Use existing Build Cache” for the first deployment after replacing the old project.
 
-The explorer is always visible: fixed at the left on desktop and tablet, and a compact sticky panel above the content on mobile. No menu icon or opening action is required. Folders expand/collapse; Ctrl/Cmd+K opens file search. URL hash navigation supports back and forward.
+You do not need Cloudflare credentials to build or view the portfolio.
 
-Project previews are explanatory component outlines, not original application screenshots or live deployments. No unverified repository, social account, or demo URLs are claimed. The profile avatar is pixel art based on the user-provided beach avatar image.
+## Contact inbox on Vercel
 
-## Development
+The old archive depended on a Cloudflare Worker-only database binding. Vercel does not supply that binding. This version accesses D1 over HTTPS from the server instead, without the `cloudflare:workers` module.
 
-Run `npm ci`, then `npm run dev`. Run `npx tsc --noEmit` and `npm run build` before publication. `.openai/hosting.json` retains the existing Site identity and D1 binding.
+To enable contact submissions, configure a Cloudflare D1 database you control, apply `db/schema.sql` once in its SQL console, then set these Vercel environment variables and redeploy:
 
-Contact messages are stored in the private D1 `messages` table, not emailed. Direct email and telephone links use the résumé details. Validation, honeypot protection, origin checks, and repeat-submission rate limiting remain in place. Existing database migrations and production records are preserved.
+- `CLOUDFLARE_ACCOUNT_ID`
+- `CLOUDFLARE_D1_DATABASE_ID`
+- `CLOUDFLARE_API_TOKEN` with permission to edit D1 in that account
+
+If you already control the original D1 database, the same messages schema is compatible. The database managed by the separate ChatGPT-hosted Site is not automatically transferred to Vercel. This ZIP contains no production records or database credentials.
+
+Keep the token server-only: never prefix these variables with `NEXT_PUBLIC_`. Without this configuration, the portfolio still builds and the email/telephone links work; the contact form returns an honest unavailable response instead of pretending the message was saved.
+
+For a low-traffic portfolio inbox, this adapter uses Cloudflare's D1 API. Cloudflare's API rate limits apply.
+
+## Local development
+
+Requires Node.js 22.13+ and npm:
+
+```sh
+npm ci
+npm run dev
+```
+
+Open the URL printed by Next.js. For a production check:
+
+```sh
+npm run build
+npm start
+```
+
+For the optional inbox, copy `.env.example` to `.env.local` and fill in your own values. Build and navigation do not require those values.
+
+## Editing
+
+- `components/portfolio/data.ts`: projects, skills, experience.
+- `components/portfolio/Workspace.tsx`: page sections and navigation.
+- `components/portfolio/Explorer.tsx`: file explorer.
+- `components/portfolio/Contact.tsx`: form and contact links.
+- `app/api/contact/route.ts`: input validation and submission handling.
+- `db/index.ts`: server-only D1 HTTPS adapter.
+- `app/globals.css`: responsive layout and animations.
+- `public/jethro-profile-avatar.jpg`: selected profile avatar.
+- `public/Jethro_Rendon_Resume.pdf`: downloadable résumé.
+
+## Validation
+
+```sh
+npm run typecheck
+npm test
+npm run build
+```
+
+The Cloudflare/Vinext build files and unused starter dependencies have been removed from this Vercel version. This archive does not change the separate ChatGPT-hosted Site.
