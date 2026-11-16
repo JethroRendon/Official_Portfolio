@@ -88,3 +88,13 @@ The source ZIP includes all application files, public assets, lockfile, Vercel c
 Only assets used by this portfolio are included: the current profile image, résumé PDF, favicon, JetBrains Mono font, and Barlow Bold font. Earlier avatar variants, the design-reference screenshot, unused fonts, demo widgets, and obsolete CSS have been removed. The README is the setup guide.
 
 The AI and Build cursor labels float independently while staying anchored to the headline. Their movement follows the visitor’s reduced-motion preference.
+
+## Appearance
+
+Use the sun/moon buttons beside the profile to choose light or dark mode. The selected theme is saved in the browser and applied before the page renders on return visits. The explorer, loading screen, home, project panels, contact form, and dog controls support both themes.
+
+## Toolkit and résumé
+
+The toolkit uses three animated rows of local icons, with hover-to-pause, a pause/play control, and a static wrapped layout for reduced-motion preferences. Skills and contact information follow the updated November 2026 résumé; Dart and Flutter are included from Groupify project experience. The current PDF is in `public/Jethro_Rendon_Resume.pdf`. Icon shapes are bundled locally from Simple Icons (CC0); the condensed toolkit heading uses Barlow Condensed. No external asset requests are needed at runtime.
+
+The full stack is grouped into editor-style panels with category accents and résumé-backed skill counts. Hover pauses only the toolkit row under the pointer; the pause/play control still affects all rows.

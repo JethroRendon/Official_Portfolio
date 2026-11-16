@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { ChevronDown, ChevronRight, File, Folder, Atom, Braces, Diamond, Search } from 'lucide-react';
 import { projects, experiences } from './data';
 import styles from './Explorer.module.css';
+import ThemeToggle from './ThemeToggle';
 
 export type View = 'home' | 'about' | 'skills' | 'community' | 'contact' | `project/${string}` | `experience/${string}`;
 export const fileName = (view: View) => view === 'home' ? 'home.jsx' : view === 'about' ? 'about.md' : view === 'skills' ? 'toolkit.jsx' : view === 'community' ? 'sidequest.md' : view === 'contact' ? 'contact.json' : view.startsWith('project/') ? projects.find(x => x.id === view.split('/')[1])?.file || 'projects' : experiences.find(x=>x.id===view.split('/')[1])?.file || 'experience.ts';
@@ -28,10 +29,10 @@ export default function Explorer({ view, navigate, onSearch }: { view: View; nav
   </div>;
  }
  return <aside className={styles.sidebar} aria-label="Portfolio file explorer">
-  <a href="#home" onClick={e => { e.preventDefault(); navigate('home'); }} className={styles.identity}>
+  <div className={styles.identityRow}><a href="#home" onClick={e => { e.preventDefault(); navigate('home'); }} className={styles.identity}>
    <img className={styles.avatar} src="/jethro-night-avatar.jpg" alt="Pixel-art profile of Jethro A. Rendon" width={55} height={55}/>
    <span><strong>Jethro Rendon</strong><small>PORTFOLIO</small></span>
-  </a>
+  </a><ThemeToggle/></div>
   <div className={styles.explorer}>
    <div className={styles.header}><span className={styles.lights} aria-hidden="true"><i/><i/><i/></span><span>explorer</span><button className={styles.search} onClick={onSearch} aria-label="Search portfolio files"><Search size={15}/></button></div>
    <nav className={styles.navigation} aria-label="Portfolio sections"><div className={styles.tree}>

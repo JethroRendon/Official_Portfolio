@@ -1,0 +1,6 @@
+.group{display:flex;align-items:center;gap:2px;padding:3px;flex-shrink:0;border:1px solid rgb(var(--ui-ink)/.09);border-radius:11px;background:var(--theme-toggle-bg,#121214);margin-right:4px}
+.group button{display:flex;align-items:center;justify-content:center;width:32px;height:32px;padding:0;border-radius:7px;color:var(--theme-toggle-muted,#93949e);transition:background .2s,color .2s,box-shadow .2s}
+.group button:hover{color:var(--text);background:rgb(var(--ui-ink)/.05)}
+.group button[aria-pressed="true"]{color:var(--theme-toggle-active,#c9c3f3);background:var(--theme-toggle-selected,#29272f);box-shadow:0 1px 4px #0000000a}
+.group button:focus-visible{outline:2px solid #8e83cf;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.group button{transition:none}}
