@@ -98,3 +98,21 @@ Use the sun/moon buttons beside the profile to choose light or dark mode. The se
 The toolkit uses three animated rows of local icons, with hover-to-pause, a pause/play control, and a static wrapped layout for reduced-motion preferences. Skills and contact information follow the updated November 2026 résumé; Dart and Flutter are included from Groupify project experience. The current PDF is in `public/Jethro_Rendon_Resume.pdf`. Icon shapes are bundled locally from Simple Icons (CC0); the condensed toolkit heading uses Barlow Condensed. No external asset requests are needed at runtime.
 
 The full stack is grouped into editor-style panels with category accents and résumé-backed skill counts. Hover pauses only the toolkit row under the pointer; the pause/play control still affects all rows.
+
+## Interactive about page
+
+`about.md` opens a résumé-based profile with keyboard-accessible Overview, Education, and Leadership tabs; a synchronized, copyable JSON card; expandable coursework and credential notes; résumé preview; and navigation to the toolkit, thesis project, and leadership experience. The design supports both themes, smaller screens, and reduced motion.
+
+## Dog interactions
+
+Click or tap the dog, or focus it and press Enter/Space, to pause it for 25 seconds. After a bone, it chews, displays three hearts for three seconds, then rests for ten seconds before following the latest pointer position. The feeder pauses during the break. Repeated petting starts a fresh 25-second break. Reduced-motion preferences are preserved.
+
+The About overview uses Jethro’s supplied introduction. Matching editor-style panels in `sidequest.md` present his travel, beach, freediving, hiking, fashion, volleyball, basketball, and jogging interests, with responsive stacking and both themes supported.
+
+The “Outside the Editor” section lives in `PersonalInterests.tsx` and opens in `sidequest.md`; it is no longer rendered in `about.md`.
+
+## Contact cubes
+
+`contact.json` matches the supplied reference with a condensed “What’s Next?” heading, four local SVG isometric cubes with hover/focus highlights, and a developer profile code card. The cubes link to GitHub, LinkedIn, the current résumé, and email. “Compose a message” expands the validated inbox form; it uses the existing contact API. No LeetCode URL was supplied, so the fourth professional resource is the résumé.
+
+The contact résumé cube opens the PDF in a new browser tab for preview; it does not force a download.

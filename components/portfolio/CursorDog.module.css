@@ -1,10 +1,13 @@
 .scene{position:fixed;inset:0;z-index:65;pointer-events:none;overflow:hidden}
-.pet{position:absolute;left:0;top:0;width:42px;height:35px;opacity:0;will-change:transform;pointer-events:none}
-.sprite{width:42px;height:35px;transform-origin:center}.sprite svg{display:block;filter:drop-shadow(0 2px 3px #0003)}
+.pet{position:absolute;left:0;top:0;width:42px;height:35px;padding:0;border:0;background:transparent;opacity:0;will-change:transform;pointer-events:auto;touch-action:manipulation;cursor:pointer}
+.pet:focus-visible{outline:2px solid #a29ae4;outline-offset:5px;border-radius:6px}
+.sprite{display:block;width:42px;height:35px;transform-origin:center}.sprite svg{display:block;filter:drop-shadow(0 2px 3px #0003)}
 .tail{transform-origin:12px 25px;animation:wag .7s steps(2,end) infinite}.walking .backLeg{animation:step .22s steps(2,end) infinite}.walking .frontLeg{animation:step .22s steps(2,end) -.11s infinite}
 .happy .tail{animation-duration:.15s}.eating .head{animation:nibble .18s steps(2,end) infinite}.happy .mouthBone{animation:chew .3s steps(2,end) infinite}
 .sleeping .tail{animation:none}.sleeping .backLeg,.sleeping .frontLeg{opacity:0}.sleeping .sprite{translate:0 5px}.sleeping .head{translate:0 6px}
-.heart{position:absolute;left:22px;top:-12px;color:var(--light-red,#c1798f);font-size:13px;line-height:1;animation:love .9s ease-in-out infinite;text-shadow:0 2px 6px #0002}
+.hearts{position:absolute;left:3px;top:-17px;display:flex;align-items:center;gap:3px;pointer-events:none}
+.heart{position:relative;color:var(--light-red,#c1798f);font-size:10px;line-height:1;animation:love .9s ease-in-out infinite;text-shadow:0 2px 6px #0002}
+.heart:nth-child(2){top:-5px;font-size:13px;animation-delay:.15s}.heart:nth-child(3){animation-delay:.3s}
 .sleep{position:absolute;top:-6px;left:24px;color:var(--light-muted,#a29e89);font:11px/1 var(--mono)}.sleep>span{position:absolute;left:9px;top:-7px;font-size:8px}
 .food{position:absolute;left:0;top:0;will-change:transform;filter:drop-shadow(0 2px 2px #0004)}
 .carryingCursor,.carryingCursor *{cursor:none!important}
