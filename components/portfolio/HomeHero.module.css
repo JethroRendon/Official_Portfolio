@@ -1,0 +1,35 @@
+.hero{container-type:inline-size;position:relative;display:flex;align-items:center;justify-content:center;min-height:700px;height:100svh;padding:65px 45px 100px;color:#e3e5cd;overflow:hidden}
+.composition{width:100%;max-width:940px;text-align:center}
+.hello{display:flex;justify-content:center;align-items:center;margin-bottom:34px;animation:arrive .7s ease both}
+.hello>span{font-size:15px;letter-spacing:-.3px;padding:12px 19px;border:1px solid #ffffff10;border-radius:30px;color:#dedfd3;background:#17171980;box-shadow:0 4px 24px #00000012}
+.helloDot{color:#a29ae4;text-shadow:0 0 10px #a29ae455}
+.headline{position:relative;max-width:900px;margin:auto}
+.headline h1{margin:0;font:800 clamp(40px,8.5cqw,98px)/1.08 Arial,Helvetica,sans-serif;letter-spacing:-.065em}
+.row{display:flex;justify-content:center;align-items:center;gap:.17em;white-space:nowrap;animation:arrive .7s cubic-bezier(.2,.7,.2,1) both;transition:filter .3s}
+.first{animation-delay:.08s}.row:nth-child(2){animation-delay:.16s}.third{animation-delay:.24s}
+.purple{color:#a29ae4}.yellow{color:#d4c272}.green{color:#87cbb0}
+.row:hover{filter:brightness(1.12)}
+.aiWord{position:relative}
+.developer{position:relative;transition:color .3s,text-shadow .3s}
+.developer::after{content:'';position:absolute;bottom:-8px;left:50%;width:34px;height:2px;background:#87cbb0;box-shadow:0 0 12px #87cbb044;transform:translateX(-50%);transition:width .45s cubic-bezier(.2,.7,.2,1)}
+.developer:hover{color:#f0f1dd;text-shadow:0 0 28px #e3e5cd14}.developer:hover::after{width:65%}
+.connect{display:inline-flex;align-items:center;gap:7px;padding:11px 12px;border:1px solid #ffffff12;border-radius:30px;color:#e1e4d2;font:11px/1.4 Arial,sans-serif;letter-spacing:-.1px;background:#151719;white-space:nowrap;transition:background .2s,border-color .2s,color .2s,box-shadow .2s}
+.connect i{height:7px;width:7px;border-radius:50%;background:#8dbc78;box-shadow:0 0 0 4px #8dbc7812;animation:pulse 3s ease-in-out infinite}
+.connect:hover{background:#87cbb018;border-color:#87cbb050;color:#bcebd7;box-shadow:0 0 20px #87cbb00d}
+.connect svg{transition:transform .2s}.connect:hover svg{transform:translate(2px,-2px)}
+.cursor{position:absolute;display:flex;flex-direction:column;align-items:flex-start;pointer-events:none;font:10px/1.4 Arial,sans-serif;letter-spacing:0;animation:cursorFloat 3.4s ease-in-out infinite;will-change:translate;}
+.cursor>span{border:1px solid #ffffff20;border-radius:5px;padding:4px 9px;margin:-2px 0 0 15px;color:#f3f1f8;box-shadow:0 4px 12px #0002}
+.aiCursor{--cursor-x:4px;--cursor-y:-5px;color:#a29ae4;top:-20px;right:-30px}.aiCursor>svg{transform:rotate(-90deg)}.aiCursor>span{background:#766bb4}
+.buildCursor{--cursor-x:5px;--cursor-y:4px;animation-duration:4.1s;animation-delay:-1.8s;color:#87cbb0;right:-36px;bottom:-30px;flex-direction:row;align-items:flex-start}.buildCursor>svg{transform:rotate(0deg)}.buildCursor>span{margin:13px 0 0 -4px}.buildCursor>span{background:#477f70}
+.purpose{margin:29px 0 0;text-align:center;font:9px/1.7 var(--mono);letter-spacing:.2px;color:#878d84;animation:arrive .7s .32s ease both}
+.description{margin:24px auto 12px;max-width:620px;color:#c9ccbf;font-size:clamp(15px,1.8cqw,21px);font-weight:400;line-height:1.65;letter-spacing:-.3px;animation:arrive .7s .4s ease both}
+.education{display:block;color:#777e78;font:8px/1.8 var(--mono);letter-spacing:1.15px;animation:arrive .7s .48s ease both}
+.explore{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#9b9e95;font:9px/1.6 var(--mono);letter-spacing:1.7px;padding:10px;white-space:nowrap}
+.explore svg{animation:nudge 2.8s ease-in-out infinite}.explore:hover{color:#e3e5cd}
+@keyframes arrive{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes cursorFloat{0%,100%{translate:0 0}50%{translate:var(--cursor-x) var(--cursor-y)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 4px #8dbc7812}50%{box-shadow:0 0 0 6px #8dbc7806}}
+@keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+@media(min-width:761px) and (max-width:1199px){.hero{padding-left:24px;padding-right:24px;min-height:700px}.headline h1{font-size:8.2cqw}.connect{font-size:9px;padding:9px}.buildCursor{right:-30px;bottom:-28px}}
+@media(max-width:760px){.hero{height:auto;min-height:calc(100svh - min(275px,40svh));padding:48px 20px 90px}.hello{margin-bottom:34px}.hello>span{font-size:13px;padding:11px 14px}.headline h1{font-size:8.6cqw;line-height:1.18;letter-spacing:-.065em}.connect{font-size:10px;min-height:36px;padding:8px;gap:5px}.connect svg{display:none}.connect i{height:5px;width:5px;box-shadow:none}.purpose{font-size:8px;letter-spacing:0;margin-top:27px}.description{margin-top:19px;font-size:14px;line-height:1.7;max-width:370px}.desktopBreak{display:none}.education{font-size:7px;letter-spacing:.5px;max-width:280px;margin:12px auto 0}.cursor{font-size:8px}.cursor svg{width:15px;height:15px}.cursor>span{padding:3px 6px;margin-left:10px}.aiCursor{top:-15px;right:-23px}.buildCursor{right:-30px;bottom:-23px}.buildCursor>span{margin:10px 0 0 -3px}.explore{bottom:16px;font-size:8px;gap:9px}}
+@media(prefers-reduced-motion:reduce){.hello,.row,.purpose,.description,.education,.cursor,.explore svg,.connect i{animation:none}.row,.developer,.developer::after,.connect,.connect svg{transition:none}}
