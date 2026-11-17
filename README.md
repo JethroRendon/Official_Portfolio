@@ -116,3 +116,5 @@ The “Outside the Editor” section lives in `PersonalInterests.tsx` and opens 
 `contact.json` matches the supplied reference with a condensed “What’s Next?” heading, four local SVG isometric cubes with hover/focus highlights, and a developer profile code card. The cubes link to GitHub, LinkedIn, the current résumé, and email. “Compose a message” expands the validated inbox form; it uses the existing contact API. No LeetCode URL was supplied, so the fourth professional resource is the résumé.
 
 The contact résumé cube opens the PDF in a new browser tab for preview; it does not force a download.
+
+About page: refined editor tabs with keyboard navigation, synchronized profile JSON with copy feedback, exclusive coursework accordions, résumé preview, and a direct link to sidequest.md. Responsive light and dark layouts are included.
