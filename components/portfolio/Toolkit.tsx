@@ -72,7 +72,7 @@ export default function Toolkit() {
    </div>)}
   </div>
   <div className={styles.details}>
-   <div className={styles.detailHeading}><div><span className={styles.detailEyebrow}><Terminal size={14} aria-hidden="true"/> THE FULL STACK</span><p>Tools and foundations from my updated résumé.</p></div><span className={styles.stackCount}><i aria-hidden="true"/>{skillCount} skills<span>/</span>04 areas</span></div>
+   <div className={styles.detailHeading}><div><span className={styles.detailEyebrow}><Terminal size={14} aria-hidden="true"/> THE FULL STACK</span></div><span className={styles.stackCount}><i aria-hidden="true"/>{skillCount} skills<span>/</span>04 areas</span></div>
    <div className={styles.categories}>{skillGroups.map((group, index) => {
     const category = categories[index];
     const Icon = category.icon;

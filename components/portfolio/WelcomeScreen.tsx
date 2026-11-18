@@ -61,7 +61,7 @@ export default function WelcomeScreen({ children, autoEnterAfterMs = 4400, remem
 
   const active = phase !== 'done';
   return <>
-    <div inert={active || undefined} aria-hidden={active || undefined}>{children}</div>
+    <div data-portfolio-ready={phase === 'done' ? 'true' : 'false'} inert={active || undefined} aria-hidden={active || undefined}>{children}</div>
     {active && <div
       ref={dialog} tabIndex={-1}
       className={`${styles.screen} ${phase === 'leaving' ? styles.leaving : ''}`}
