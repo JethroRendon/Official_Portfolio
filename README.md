@@ -120,3 +120,7 @@ The contact résumé cube opens the PDF in a new browser tab for preview; it doe
 About page: refined editor tabs with keyboard navigation, synchronized profile JSON with copy feedback, exclusive coursework accordions, résumé preview, and a direct link to sidequest.md. Responsive light and dark layouts are included.
 
 The résumé PDF was replaced with the supplied November 18, 2026 version. Project pages include the résumé timelines; Groupify is listed as Full Stack Development, and VEC-PRO identifies AEDEX Mobile and AEDIFY Web. Existing résumé links preview the new PDF in a browser tab.
+
+About UI: reference-inspired two-column cards with preview panels, tags, expandable introduction and learning notes, résumé preview, and links to experience, VEC-PRO, toolkit, contact, and Sidequest. Light/dark themes and a single-column mobile layout are supported.
+
+About UI now uses the supplied video’s overlapping coral, apricot, and yellow card deck. Cards lift and move to the front on hover/focus, open accessible story panels on activation, and become swipeable cards on mobile. The project card was removed from About; the project section and résumé are retained.
