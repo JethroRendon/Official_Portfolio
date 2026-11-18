@@ -118,3 +118,5 @@ The “Outside the Editor” section lives in `PersonalInterests.tsx` and opens 
 The contact résumé cube opens the PDF in a new browser tab for preview; it does not force a download.
 
 About page: refined editor tabs with keyboard navigation, synchronized profile JSON with copy feedback, exclusive coursework accordions, résumé preview, and a direct link to sidequest.md. Responsive light and dark layouts are included.
+
+The résumé PDF was replaced with the supplied November 18, 2026 version. Project pages include the résumé timelines; Groupify is listed as Full Stack Development, and VEC-PRO identifies AEDEX Mobile and AEDIFY Web. Existing résumé links preview the new PDF in a browser tab.
