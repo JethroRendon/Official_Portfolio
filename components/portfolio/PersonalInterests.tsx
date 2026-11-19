@@ -10,7 +10,7 @@ const personalInterests = [
 export default function PersonalInterests() {
  return (
   <section className={styles.personal} aria-labelledby="sidequest-personal-heading">
-   <div className={styles.sectionHeading}><h2 id="sidequest-personal-heading">// OUTSIDE THE EDITOR</h2><p>Travel, personal style, and staying active.</p></div>
+   <div className={styles.sectionHeading}><h2 id="sidequest-personal-heading">Outside the editor</h2><p>Travel, personal style, and staying active.</p></div>
    <div className={styles.personalGrid}>{personalInterests.map((interest, index) => { const Icon = interest.icon; return <article className={styles.personalCard} key={interest.file}>
     <div className={styles.personalBar}><span><Icon size={13} aria-hidden="true"/>{interest.file}</span><span>0{index + 1}</span></div>
     <div className={styles.personalBody}><span className={styles.personalIcon} aria-hidden="true"><Icon size={20} strokeWidth={1.5}/></span><h3>{interest.title}</h3><p>{interest.description}</p></div>

@@ -1,18 +1,27 @@
 'use client';
-import { useState } from 'react';
-import { ArrowRight, Code2 } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { ArrowLeft, ArrowRight, Maximize2 } from 'lucide-react';
 import { projects } from './data';
-const componentNotes: Record<string,string[]> = {
- 'vec-pro': ['Community image reporting is one component of the surveillance platform.', 'MobileNetV3-Large is used for screening in the research platform.', 'YOLOv8s provides the detection component described in the thesis project.', 'The platform includes an LGU web dashboard for the Iloilo City context.', 'The research platform includes agent-based mosquito spread simulation.'],
- 'strayspot': ['A centralized digital management system supports animal shelters.', 'The project supports rescue organizations in Iloilo City.', 'Pet discovery is one of the user-facing experiences supported by the system.', 'The system supports pet adoption; my contribution focused on frontend development.'],
- 'synt-ask': ['The NLP final project is a real-time multiplayer game.', 'I developed the frontend using React and TypeScript.', 'The project uses DistilBERT-based semantic analysis.', 'Semantic analysis supports impostor detection in the multiplayer game.', 'I contributed to the project documentation alongside frontend development.'],
- 'groupify': ['The application supports collaboration among students.', 'Task management is one of the application’s collaboration features.', 'Group communication is supported in the mobile application.', 'The application supports file sharing, using Flutter, Dart, and Firebase.'],
-};
-export default function ProjectPreview({ id, interactive = false }: { id: string; interactive?: boolean }) {
- const project=projects.find(p=>p.id===id) || projects[0];
- const [selected,setSelected]=useState(0);
- return <div className={`project-preview resume-preview ${interactive?'interactive':''}`} style={{'--project-color':project.color,'--project-color-light':project.lightColor} as React.CSSProperties} aria-label={`${project.name} project component overview`}>
-  <div className="preview-window"><span/><span/><span/><small>{project.file} / project overview</small></div>
-  <div className="resume-preview-body"><div className="resume-preview-title"><Code2 size={20}/><span>{project.category}</span></div><h3>{project.name}<span>_</span></h3><p className="resume-preview-role">{project.role}</p><div className="component-flow" role={interactive?'group':undefined} aria-label="Project components">{project.components.map((name,i)=><div key={name}>{interactive?<button className={selected===i?'active':''} onClick={()=>setSelected(i)} aria-pressed={selected===i}><small>0{i+1}</small>{name}</button>:<span><small>0{i+1}</small>{name}</span>}{i<project.components.length-1&&<ArrowRight size={13}/>}</div>)}</div>{interactive&&<p className="component-description" aria-live="polite"><span className="code-comment">// selected component</span><strong>{project.components[selected]}</strong><span>{componentNotes[project.id][selected]}</span></p>}<div className="preview-status"><i/> {interactive?'Interactive project outline':'Project components · based on résumé'}</div></div>
- </div>;
+import { projectMedia } from './projectMedia';
+import styles from './ProjectShowcase.module.css';
+export default function ProjectPreview({ id, interactive = false, initialIndex = 0, onExpand }: { id: string; interactive?: boolean; initialIndex?: number; onExpand?: (trigger: HTMLButtonElement, index: number) => void }) {
+ const [selected, setSelected] = useState(initialIndex);
+ const start = useRef<{ x: number; y: number } | null>(null);
+ const swiped = useRef(false);
+ const project = projects.find(p => p.id === id)!;
+ const slides = projectMedia[id].slides;
+ const slide = slides[selected];
+ function move(offset: number) { setSelected(index => (index + offset + slides.length) % slides.length); }
+ const pictures = <>{slide.images.map((src, index) => <img key={src} src={src} alt={`${project.name}: ${slide.title}${slide.images.length > 1 ? `, screen ${index + 1}` : ''}`} loading="lazy" decoding="async" draggable={false}/>)}</>;
+ return <section className={`${styles.gallery} ${interactive ? styles.expanded : ''}`} aria-label={`${project.name} screenshots`} onKeyDown={event => { if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') { event.preventDefault(); move(event.key === 'ArrowRight' ? 1 : -1); } }}>
+  <div className={`${styles.frame} ${slide.presentation ? styles[slide.presentation] : ''}`} onTouchStart={event => { swiped.current = false; start.current = { x: event.touches[0].clientX, y: event.touches[0].clientY }; }} onTouchEnd={event => { if (!start.current) return; const dx = event.changedTouches[0].clientX - start.current.x, dy = event.changedTouches[0].clientY - start.current.y; if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) { swiped.current = true; move(dx < 0 ? 1 : -1); } start.current = null; }}>
+   {onExpand ? <button className={styles.openImage} onClick={event => { if (!swiped.current) onExpand(event.currentTarget, selected); swiped.current = false; }} aria-label={`Enlarge ${project.name} screenshots`}>{pictures}<span className={styles.zoom}><Maximize2 size={15} aria-hidden="true"/></span></button> : <div className={styles.openImage}>{pictures}</div>}
+   <span className={styles.badge}>{id === 'groupify' ? 'Document prototype' : id === 'strayspot' ? 'UI design' : 'Project screenshot'}</span>
+  </div>
+  <div className={styles.galleryControls}>
+   <div className={styles.dots} role="group" aria-label="Choose screenshot">{slides.map((item, index) => <button key={item.title} aria-label={`Show screenshot ${index + 1}: ${item.title}`} aria-pressed={selected === index} onClick={() => setSelected(index)}><span/></button>)}</div>
+   <div className={styles.arrows}><button onClick={() => move(-1)} aria-label={`Previous ${project.name} screenshot`}><ArrowLeft size={17} aria-hidden="true"/></button><span aria-live="polite" aria-atomic="true">{selected + 1}/{slides.length}</span><button onClick={() => move(1)} aria-label={`Next ${project.name} screenshot`}><ArrowRight size={17} aria-hidden="true"/></button></div>
+  </div>
+  {interactive && <p className={styles.caption}>{slide.title}</p>}
+ </section>;
 }

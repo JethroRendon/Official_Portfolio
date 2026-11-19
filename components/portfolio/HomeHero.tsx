@@ -148,7 +148,7 @@ export default function HomeHero({ navigate }: { navigate: (target: View) => voi
         </div>
         {tool === 'radius' && <div className={styles.radiusDemo} aria-label="Corner radius playground">{[1,2,3,4,5,6].map(count => <div key={count} className={styles.die} style={{ borderRadius: `${radius}px` }}>{Array.from({ length: count }, (_, pip) => <i key={pip}/>)}<button className={styles.radiusHandle} aria-label={`Round shape ${count}`} onPointerDown={event => beginDrag(event, 'radius')} onPointerMove={moveDrag} onPointerUp={endDrag} onPointerCancel={endDrag} onKeyDown={event => { if (event.key === 'ArrowRight') setRadius(current => Math.min(40, current + 1)); if (event.key === 'ArrowLeft') setRadius(current => Math.max(0, current - 1)); }}/></div>)}</div>}
       </div>
-      <p className={styles.purpose}>// Code with purpose. Build with intention.</p>
+      <p className={styles.purpose}>Code with purpose. Build with intention.</p>
       <p className={styles.description}>Building web &amp; mobile experiences through{' '}<br/><span style={{ color: palettes[palette][0] }}>thoughtful code</span>, <span style={{ color: palettes[palette][1] }}>useful AI</span>, and <span className={styles.green}>community impact</span>.</p>
       <span className={styles.education}>BS COMPUTER SCIENCE · ARTIFICIAL INTELLIGENCE · WVSU</span>
       <div className={styles.playground}>

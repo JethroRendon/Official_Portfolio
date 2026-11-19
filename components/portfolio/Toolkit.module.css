@@ -16,7 +16,8 @@
 .iconCard{width:76px;height:76px;margin:0 auto 11px;display:grid;place-items:center;background:#edeee5;border:1px solid #ffffff85;border-radius:18px;box-shadow:inset 0 1px 0 #fff,0 5px 15px #0000000a;transition:transform .2s,box-shadow .2s}
 .iconInset{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;color:var(--tool-color);background:color-mix(in srgb,var(--tool-color) 8%,#f8f8f2)}
 .iconInset svg{width:32px;height:32px}
-.iconInset svg:has(use){fill:currentColor}
+.toolLogo{width:32px;height:32px;flex-basis:32px}
+.javaInset{background:#202124}
 .tile>span{font-size:10px;line-height:1.5;color:var(--light-muted,#b4b5bc);white-space:nowrap;display:block}
 .tile:hover .iconCard{transform:translateY(-4px) rotate(-3deg);box-shadow:0 6px 18px color-mix(in srgb,var(--tool-color) 18%,transparent)}
 .lane:hover .track,.paused .track{animation-play-state:paused}
@@ -52,5 +53,5 @@
 @keyframes drift{to{transform:translateX(-50%)}}
 @media(max-width:1000px){.toolSet{gap:22px;padding-right:22px}.tile{width:83px}.iconCard{height:70px;width:70px;border-radius:17px}}
 @media(min-width:761px) and (max-width:1050px){.categories{grid-template-columns:1fr}}
-@media(max-width:760px){.heading{padding-top:2px;padding-bottom:25px}.heading h1{font-size:38px}.heading p{font-size:12px;max-width:260px;margin:auto}.heading .eyebrow{font-size:9px}.motionBar{font-size:7px;padding-bottom:12px}.toolSet{gap:18px;padding-right:18px}.tile{width:72px}.iconCard{height:62px;width:62px;border-radius:15px;margin-bottom:9px}.iconInset{width:41px;height:41px;border-radius:10px}.iconInset svg{width:28px;height:28px}.tile>span{font-size:9px}.lanes{gap:22px}.categories{grid-template-columns:1fr;gap:25px}.details{padding-top:37px}}
+@media(max-width:760px){.heading{padding-top:2px;padding-bottom:25px}.heading h1{font-size:38px}.heading p{font-size:12px;max-width:260px;margin:auto}.heading .eyebrow{font-size:9px}.motionBar{font-size:7px;padding-bottom:12px}.toolSet{gap:18px;padding-right:18px}.tile{width:72px}.iconCard{height:62px;width:62px;border-radius:15px;margin-bottom:9px}.iconInset{width:41px;height:41px;border-radius:10px}.iconInset svg{width:28px;height:28px}.toolLogo{width:28px;height:28px;flex-basis:28px}.tile>span{font-size:9px}.lanes{gap:22px}.categories{grid-template-columns:1fr;gap:25px}.details{padding-top:37px}}
 @media(prefers-reduced-motion:reduce){.lanes{mask-image:none;overflow:visible;gap:16px}.lane{overflow:visible}.track{animation:none;width:100%;transform:none;will-change:auto}.toolSet{width:100%;display:flex;flex-wrap:wrap;justify-content:center;gap:18px 12px;padding:0}.duplicate{display:none}.motionBar{display:none}.tile:hover .iconCard{transform:none}}

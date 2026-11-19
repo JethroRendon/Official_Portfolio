@@ -5,8 +5,13 @@ import { projects, experiences } from './data';
 import styles from './Explorer.module.css';
 import ThemeToggle from './ThemeToggle';
 
-export type View = 'home' | 'about' | 'skills' | 'community' | 'contact' | `project/${string}` | `experience/${string}`;
-export const fileName = (view: View) => view === 'home' ? 'home.jsx' : view === 'about' ? 'about.md' : view === 'skills' ? 'toolkit.jsx' : view === 'community' ? 'sidequest.md' : view === 'contact' ? 'contact.json' : view.startsWith('project/') ? projects.find(x => x.id === view.split('/')[1])?.file || 'projects' : experiences.find(x=>x.id===view.split('/')[1])?.file || 'experience.ts';
+export type View = 'home' | 'about' | 'skills' | 'community' | 'contact' | 'projects' | `project/${string}` | `experience/${string}`;
+export function resolveView(value: string): View {
+ if (projects.some(project => value === `project/${project.id}`)) return 'projects';
+ if (['home','about','skills','community','contact','projects'].includes(value) || experiences.some(entry => value === `experience/${entry.id}`)) return value as View;
+ return 'home';
+}
+export const fileName = (view: View) => view === 'home' ? 'home.jsx' : view === 'about' ? 'about.md' : view === 'skills' ? 'toolkit.jsx' : view === 'community' ? 'sidequest.md' : view === 'contact' ? 'contact.json' : view === 'projects' ? 'gallery.tsx' : view.startsWith('project/') ? projects.find(x => x.id === view.split('/')[1])?.file || 'projects' : experiences.find(x=>x.id===view.split('/')[1])?.file || 'experience.ts';
 const cx = (...classes: (string | false | undefined)[]) => classes.filter(Boolean).map(name => styles[name as string]).join(' ');
 
 export default function Explorer({ view, navigate, onSearch }: { view: View; navigate: (v: View) => void; onSearch: () => void }) {
@@ -38,7 +43,7 @@ export default function Explorer({ view, navigate, onSearch }: { view: View; nav
    <nav className={styles.navigation} aria-label="Portfolio sections"><div className={styles.tree}>
     {item('home.jsx', 'home', 'react')}{item('about.md', 'about', 'markdown')}
     {folder('skills', item('toolkit.jsx', 'skills', 'react', true))}
-    {folder('projects', projects.map(p => item(p.file, `project/${p.id}`, p.file.endsWith('.tsx') ? 'react' : p.file.endsWith('.dart') ? 'typescript' : 'python', true)))}
+    {folder('projects', <>{item('gallery.tsx', 'projects', 'react', true)}{projects.map(p => item(p.file, `project/${p.id}`, p.file.endsWith('.tsx') ? 'react' : p.file.endsWith('.dart') ? 'typescript' : 'python', true))}</>)}
     {folder('experience', experiences.map(x => item(x.file, `experience/${x.id}`, 'typescript', true)))}
     {folder('behind-the-code', item('sidequest.md', 'community', 'markdown', true))}
     {item('contact.json', 'contact', 'json')}

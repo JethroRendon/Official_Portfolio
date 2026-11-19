@@ -38,7 +38,7 @@ export default function Contact() {
   } catch (err) { setState('error'); setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.'); }
  }
  return <div className={styles.contact}>
-  <header className={styles.heading}><span>CONTACT</span><h1>WHAT’S NEXT?</h1><p>Building intelligent software, web experiences, and mobile applications.</p></header>
+  <header className={styles.heading}><h1>WHAT’S NEXT?</h1><p>Building intelligent software, web experiences, and mobile applications.</p></header>
   <nav className={styles.channels} aria-label="Connect with Jethro">{channels.map(channel => <a key={channel.id} href={channel.href} className={styles.channel} target={channel.external ? '_blank' : undefined} rel={channel.external ? 'noreferrer' : undefined} aria-label={channel.id === 'resume' ? 'Preview Jethro’s résumé (opens in a new tab)' : channel.id === 'email' ? 'Email Jethro' : `Open Jethro’s ${channel.label} profile (opens in a new tab)`} style={{ '--channel-color': channel.color, '--active-top': channel.top, '--active-left': channel.left, '--active-right': channel.right } as CSSProperties}>
    <Cube>{channel.id === 'github' ? <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><use href="/toolkit-icons.svg#github"/></svg> : channel.id === 'linkedin' ? <text x="12" y="19" textAnchor="middle" fontFamily="Arial,sans-serif" fontWeight="700" fontSize="22" fill="currentColor">in</text> : channel.id === 'resume' ? <FileText size={24} strokeWidth={2}/> : <Mail size={24} strokeWidth={2}/>}</Cube>
    <span>{channel.label}<ArrowUpRight size={10} aria-hidden="true"/></span>
@@ -48,7 +48,7 @@ export default function Contact() {
    <summary><Send size={13} aria-hidden="true"/><span>Compose a message</span><ChevronDown size={13} aria-hidden="true"/></summary>
    <form className={styles.form} onSubmit={submit} aria-label="Send Jethro a message">
     <div className={styles.formBar}><span>{'{}'}</span> message.json <i aria-hidden="true"/></div>
-    <div className={styles.formBody}><p className={styles.comment}>// Good software starts with a conversation.</p><p className={styles.bracket}>{'{'}</p>
+    <div className={styles.formBody}><p className={styles.comment}>Good software starts with a conversation.</p><p className={styles.bracket}>{'{'}</p>
      {([['name','Your name'],['email','you@example.com'],['subject','Let’s build something']] as const).map(([name, placeholder]) => <label className={styles.field} key={name}><span>"{name}":</span><input name={name} type={name === 'email' ? 'email' : 'text'} placeholder={placeholder} required maxLength={name === 'subject' ? 160 : 120} autoComplete={name === 'name' ? 'name' : name === 'email' ? 'email' : 'off'}/><span className={styles.comma} aria-hidden="true">,</span></label>)}
      <label className={`${styles.field} ${styles.messageField}`}><span>"message":</span><textarea name="message" placeholder="Tell me about your idea…" required minLength={10} maxLength={5000} rows={5}/></label>
      <label className={styles.honeypot} aria-hidden="true">Website<input name="website" tabIndex={-1} autoComplete="off"/></label><p className={styles.bracket}>{'}'}</p>

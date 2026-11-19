@@ -124,3 +124,17 @@ The résumé PDF was replaced with the supplied November 18, 2026 version. Proje
 About UI: reference-inspired two-column cards with preview panels, tags, expandable introduction and learning notes, résumé preview, and links to experience, VEC-PRO, toolkit, contact, and Sidequest. Light/dark themes and a single-column mobile layout are supported.
 
 About UI now uses the supplied video’s overlapping coral, apricot, and yellow card deck. Cards lift and move to the front on hover/focus, open accessible story panels on activation, and become swipeable cards on mobile. The project card was removed from About; the project section and résumé are retained.
+
+## Project screenshot galleries
+
+Project cards include the supplied website, GitHub, and Figma destinations. Edit `components/portfolio/projectMedia.ts` to change links, captions, or screenshot order. Screenshots are optimized WebP files in `public/projects`. Groupify images are extracted prototype screens from the supplied project document. Galleries support arrows, dots, keyboard navigation, swiping, and enlarged viewing.
+
+The complete project gallery is available at `#projects`, through `projects/gallery.tsx` in the explorer, or through the homepage’s View all projects button. `ProjectGallery.tsx` renders all four projects together and is reused on the homepage. Project files and legacy project links open and focus cards in the shared gallery. There are no separate project detail pages.
+
+Project cards use a compact gallery layout with preview images, roles, descriptions, stack icons, and the specified Visit Website / View GitHub / Visit Figma buttons. Screenshot enlargement stays on the current page.
+
+Each project now has a labeled Tech Stack row. Edit the `techStack` arrays in `components/portfolio/data.ts` to maintain each project’s languages, frameworks, services, and AI models.
+
+Redundant code-comment section labels have been removed across the portfolio. Primary headings, gallery content, tech stacks, and the IDE file explorer remain available.
+
+Project technology icons use locally bundled brand logos through `TechnologyLogo.tsx`; publisher asset sources are documented in `docs/project-brand-logos.md`. AI model names remain text labels.

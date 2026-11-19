@@ -53,8 +53,7 @@ export default function ExperienceProfile({ selectedId }: { selectedId: string }
   return () => { disposed = true; cancelAnimationFrame(frame); observer.disconnect(); window.removeEventListener('scroll', schedule); window.removeEventListener('resize', schedule); };
  }, []);
  return <section className={styles.experience} aria-labelledby="experience-title">
-  <div className={styles.topline}><span>// EXPERIENCE</span><span>LEARN · LEAD · GROW</span></div>
-  <header className={styles.heading}><p>THE JOURNEY SO FAR</p><h1 id="experience-title">Learning. Leading.<br/><span>What’s next.</span></h1><p>From the classroom to the community.<br/>And the next opportunity to build.</p></header>
+  <header className={styles.heading}><h1 id="experience-title">Learning. Leading.<br/><span>What’s next.</span></h1><p>From the classroom to the community.<br/>And the next opportunity to build.</p></header>
   <div className={styles.timeline} ref={timeline}><span className={styles.rail} ref={rail} aria-hidden="true"><span className={styles.fill}/></span><ol className={styles.stepList}>
    {experiences.map(entry => {
     const copy = cardCopy[entry.id];
