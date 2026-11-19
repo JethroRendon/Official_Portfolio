@@ -71,6 +71,7 @@ export default function CursorDog() {
     function petDog() {
       if (state !== 'idle' && state !== 'sleeping' && state !== 'resting') return;
       timers.forEach(clearTimeout); timers.length = 0;
+      if (state === 'resting') { update('idle'); target = clamp(lastPointer); queue(); rest(); return; }
       pause(PET_PAUSE_MS);
     }
     function rest() {
@@ -110,7 +111,7 @@ export default function CursorDog() {
       treat = clamp(point); renderBone(); pickup = null; update('fetching'); target = clamp({ x: treat.x - 11, y: treat.y + 20 }); queue();
     }
     function pick(point: Point) {
-      if (state === 'eating' || state === 'fetching' || state === 'happy' || state === 'resting') return;
+      if (state === 'eating' || state === 'fetching' || state === 'happy') return;
       if (state === 'carrying') { cancel(); return; }
       timers.forEach(clearTimeout); timers.length = 0; clearTimeout(idleTimer);
       treat = clamp(point); pickup = { ...point }; movedBone = false; armedAt = Date.now() + 650;
@@ -120,7 +121,7 @@ export default function CursorDog() {
       pick, cancel, pet: petDog,
       keyboardFeed: () => {
         if (state === 'carrying') { cancel(); return; }
-        if (state === 'eating' || state === 'fetching' || state === 'happy' || state === 'resting') return;
+        if (state === 'eating' || state === 'fetching' || state === 'happy') return;
         clearTimeout(idleTimer); timers.forEach(clearTimeout); timers.length = 0;
         place({ x: current.x + 28, y: current.y - 18 });
       },
@@ -134,7 +135,11 @@ export default function CursorDog() {
       }
       if (event.pointerType === 'touch' || (state !== 'idle' && state !== 'sleeping')) return;
       if (state === 'sleeping') update('idle');
-      rest(); if (!reduce.matches) { target = lastPointer; queue(); }
+      const bounds = dog!.getBoundingClientRect();
+      const nearDog = event.clientX >= bounds.left - 12 && event.clientX <= bounds.right + 12 && event.clientY >= bounds.top - 12 && event.clientY <= bounds.bottom + 12;
+      rest();
+      if (nearDog) { stopMoving(); return; }
+      if (!reduce.matches) { target = lastPointer; queue(); }
     }
     function down(event: PointerEvent) {
       if (state !== 'carrying' || (event.target as Element).closest('[data-bone-button]')) return;
@@ -142,31 +147,36 @@ export default function CursorDog() {
       place({ x: event.clientX, y: event.clientY });
     }
     function up(event: PointerEvent) {
-      if (state === 'carrying' && pickup && Math.hypot(event.clientX - pickup.x, event.clientY - pickup.y) > 12) { suppressClickUntil = Date.now() + 400; place({ x: event.clientX, y: event.clientY }); }
+      if (state === 'carrying' && pickup && (event.pointerType === 'touch' || Math.hypot(event.clientX - pickup.x, event.clientY - pickup.y) > 12)) { suppressClickUntil = Date.now() + 400; place({ x: event.clientX, y: event.clientY }); }
     }
     function click(event: MouseEvent) { const shouldSuppress = event.detail > 0 && Date.now() < suppressClickUntil; suppressClickUntil = 0; if (shouldSuppress) { event.preventDefault(); event.stopPropagation(); } }
     function key(event: KeyboardEvent) { if (event.key === 'Escape' && state === 'carrying') { event.preventDefault(); cancel(); } }
+    function resetForPage() {
+      timers.forEach(clearTimeout); timers.length = 0; clearTimeout(idleTimer);
+      stopMoving(); pickup = null; movedBone = false; suppressClickUntil = 0;
+      current = clamp(current); target = { ...current }; render(); update('idle'); rest();
+    }
     function resize() { current = clamp(current); target = clamp(target); treat = clamp(treat); render(); renderBone(); }
     render(); dog.style.opacity = '1'; rest();
     window.addEventListener('pointermove', follow, { passive: true });
-    window.addEventListener('pointerdown', down, true); window.addEventListener('pointerup', up);
+    window.addEventListener('pointerdown', down, true); window.addEventListener('pointerup', up); window.addEventListener('pointercancel', cancel); window.addEventListener('blur', cancel); window.addEventListener('portfolio:pagechange', resetForPage);
     window.addEventListener('click', click, true); window.addEventListener('keydown', key); window.addEventListener('resize', resize);
     return () => {
       cancelAnimationFrame(frame); clearTimeout(idleTimer); timers.forEach(clearTimeout);
       document.body.classList.remove(styles.carryingCursor);
       window.removeEventListener('pointermove', follow); window.removeEventListener('pointerdown', down, true);
-      window.removeEventListener('pointerup', up); window.removeEventListener('click', click, true); window.removeEventListener('keydown', key); window.removeEventListener('resize', resize);
+      window.removeEventListener('pointerup', up); window.removeEventListener('pointercancel', cancel); window.removeEventListener('blur', cancel); window.removeEventListener('portfolio:pagechange', resetForPage); window.removeEventListener('click', click, true); window.removeEventListener('keydown', key); window.removeEventListener('resize', resize);
       controls.current = { pick: () => {}, cancel: () => {}, keyboardFeed: () => {}, pet: () => {} };
     };
   }, []);
 
-  const busy = phase === 'fetching' || phase === 'eating' || phase === 'happy' || phase === 'resting';
+  const busy = phase === 'fetching' || phase === 'eating' || phase === 'happy';
   const asleep = phase === 'sleeping' || phase === 'resting';
-  const hint = phase === 'carrying' ? 'Move the bone · click to drop · Esc to cancel' : phase === 'fetching' ? 'Here I come…' : phase === 'eating' ? 'Nom nom…' : phase === 'happy' ? 'One happy pup' : phase === 'resting' ? 'Taking a little break…' : 'Pick up a bone';
+  const hint = phase === 'carrying' ? 'Move the bone · click to drop · Esc to cancel' : phase === 'fetching' ? 'Here I come…' : phase === 'eating' ? 'Nom nom…' : phase === 'happy' ? 'One happy pup' : phase === 'resting' ? 'Taking a break · tap to wake' : 'Pick up a bone';
   return <>
     <div className={styles.scene}>
       <div ref={bone} className={styles.food} aria-hidden="true" hidden={phase !== 'carrying' && phase !== 'fetching'}><PixelBone/></div>
-      <button type="button" ref={pet} className={`${styles.pet} ${asleep ? styles.sleeping : ''} ${phase === 'happy' ? styles.happy : ''} ${phase === 'eating' ? styles.eating : ''}`} data-dog-state={phase} aria-label="Pet the dog and pause it for 25 seconds" title="Pet me for a little break" aria-disabled={phase !== 'idle' && phase !== 'sleeping' && phase !== 'resting'}
+      <button type="button" ref={pet} className={`${styles.pet} ${asleep ? styles.sleeping : ''} ${phase === 'happy' ? styles.happy : ''} ${phase === 'eating' ? styles.eating : ''}`} data-dog-state={phase} aria-label={phase === 'resting' ? 'Wake the dog' : 'Pet the dog and pause it for 25 seconds'} title={phase === 'resting' ? 'Tap to wake me' : 'Pet me for a little break'} aria-disabled={phase !== 'idle' && phase !== 'sleeping' && phase !== 'resting'}
         onPointerDown={event => { if (event.button === 0) controls.current.pet(); }} onClick={event => { if (event.detail === 0) controls.current.pet(); }}>
         {phase === 'happy' && <span className={styles.hearts} aria-hidden="true"><span className={styles.heart} data-dog-heart>♥</span><span className={styles.heart} data-dog-heart>♥</span><span className={styles.heart} data-dog-heart>♥</span></span>}
         {asleep && <span className={styles.sleep} aria-hidden="true">z<span>z</span></span>}
@@ -175,10 +185,10 @@ export default function CursorDog() {
     </div>
     <div className={styles.feeder}>
       <span className={styles.hint}>{hint}</span>
-      <button data-bone-button className={`${styles.boneButton} ${phase === 'carrying' ? styles.selected : ''}`} disabled={busy} aria-label={phase === 'carrying' ? 'Cancel feeding' : phase === 'resting' ? 'Dog is resting before another treat' : busy ? 'Dog is enjoying its treat' : 'Pick up a bone to feed the dog'} aria-pressed={phase === 'carrying'}
+      <button data-bone-button className={`${styles.boneButton} ${phase === 'carrying' ? styles.selected : ''}`} disabled={busy} aria-label={phase === 'carrying' ? 'Cancel feeding' : busy ? 'Dog is enjoying its treat' : 'Pick up a bone to feed the dog'} aria-pressed={phase === 'carrying'}
         onPointerDown={event => { if (event.button !== 0) return; event.currentTarget.setPointerCapture(event.pointerId); controls.current.pick({ x: event.clientX, y: event.clientY }); }}
         onClick={event => { if (event.detail === 0) controls.current.keyboardFeed(); }}><PixelBone/></button>
     </div>
-    <span className={styles.srOnly} role="status">{phase === 'happy' ? 'The dog loved its bone! Three hearts for you.' : phase === 'resting' ? 'The dog is resting. It will follow you again after its break.' : phase === 'carrying' ? 'Bone picked up. Move your pointer to lead the dog, then click to drop the bone. Press Escape to cancel.' : phase === 'eating' ? 'The dog is chewing its bone.' : ''}</span>
+    <span className={styles.srOnly} role="status">{phase === 'happy' ? 'The dog loved its bone! Three hearts for you.' : phase === 'resting' ? 'The dog is resting. Tap it or pick up a bone to wake it, or wait for its break to finish.' : phase === 'carrying' ? 'Bone picked up. Move your pointer to lead the dog, then click to drop the bone. Press Escape to cancel.' : phase === 'eating' ? 'The dog is chewing its bone.' : ''}</span>
   </>;
 }

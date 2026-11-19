@@ -21,3 +21,6 @@
 @media(prefers-reduced-motion:reduce){.hello,.row,.glyph,.purpose,.description,.education,.playground,.resumeTab,.controls,.explore svg,.cursor{animation:none!important;transition:none}.glyph:hover{translate:none}:global([data-portfolio-ready="false"]) .hello,:global([data-portfolio-ready="false"]) .row,:global([data-portfolio-ready="false"]) .glyph,:global([data-portfolio-ready="false"]) .purpose,:global([data-portfolio-ready="false"]) .description,:global([data-portfolio-ready="false"]) .education,:global([data-portfolio-ready="false"]) .playground,:global([data-portfolio-ready="false"]) .resumeTab{opacity:1}}
 
 .wordFrame[data-mixing] .glyph{transition-duration:.12s,.38s,.38s,.38s}
+
+@media(max-width:760px){.hero{min-height:calc(100svh - 56px);padding:36px 32px 28px 20px}.playground{max-width:100%;width:100%}.controls{max-width:100%}.codeWindow{min-width:0}.dock{max-width:100%;gap:2px}.resumeTab{z-index:25}.education{font-size:6px}.purpose{font-size:7px}}
+@media(max-width:380px){.dock button{padding-inline:6px;min-width:26px}.dock button.activeTool{padding-inline:9px}.dock button span{font-size:6px}.slider{width:100px}.controls{gap:8px}.description{font-size:13px}}

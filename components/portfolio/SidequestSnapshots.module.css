@@ -1,0 +1,42 @@
+.snapshots{min-width:0;margin:3px 0 48px;--accent:var(--light-purple,#b1a3e1)}
+.heading{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 0 27px;margin-bottom:25px;border-bottom:1px solid rgb(var(--ui-ink)/.08)}
+.heading h1{position:relative;font:700 clamp(36px,3.7vw,48px)/1.1 Barlow,var(--sans);letter-spacing:-1.2px;color:var(--text);margin:0}
+.heading h1:after{content:'';position:absolute;left:1px;bottom:-15px;width:32px;height:2px;border-radius:2px;background:var(--accent);opacity:.8}
+.board{position:relative;overflow:hidden;border:1px solid rgb(var(--ui-ink)/.08);border-radius:12px;background:radial-gradient(ellipse at 15% 15%,color-mix(in srgb,var(--accent) 8%,transparent),transparent 58%),radial-gradient(ellipse at 90% 100%,color-mix(in srgb,var(--light-green,#90c5a8) 5%,transparent),transparent 55%),var(--light-panel,#121214);box-shadow:inset 0 1px 0 rgb(var(--ui-ink)/.025)}
+.board:before{content:'';position:absolute;inset:0 20% auto;height:1px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--accent) 30%,transparent),transparent);pointer-events:none}
+.viewport{position:relative;overflow:hidden;padding:65px 0 58px;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none;outline-offset:-3px;mask-image:linear-gradient(90deg,transparent,#000 18px,#000 calc(100% - 18px),transparent)}
+.viewport:focus-visible{outline:2px solid var(--accent)}
+.dragging,.dragging *{cursor:grabbing!important}
+.track{display:flex;width:max-content;will-change:transform}
+.photoSet{display:flex;align-items:center;gap:32px;padding:0 32px 0 0;flex-shrink:0}
+.polaroid{position:relative;display:flex;flex-direction:column;width:216px;height:324px;flex-shrink:0;padding:11px 11px 0;border:1px solid #fff8;border-radius:2px;background:repeating-linear-gradient(0deg,#00000002 0 1px,transparent 1px 3px),#fafafa;color:#29292b;box-shadow:0 16px 25px -8px #0006,0 2px 5px #0002,inset 0 0 0 1px #fff;transform:rotate(var(--tilt));transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s;cursor:grab;isolation:isolate}
+.polaroid:before{content:'';position:absolute;top:-11px;left:calc(50% - 27px);width:54px;height:22px;background:#c8bee1ab;border:1px solid #ffffff38;box-shadow:0 1px 3px #0000000a;transform:rotate(-5deg);z-index:2;pointer-events:none}
+.polaroid:nth-child(3n+2):before{background:#b8d7c6a6;transform:rotate(5deg)}
+.polaroid:nth-child(3n):before{background:#e2d4b2b0;transform:rotate(-2deg)}
+.polaroid:nth-child(even){translate:0 -5px}
+.polaroid:hover,.polaroid:focus-visible{z-index:2;transform:rotate(0deg) translateY(-10px);box-shadow:0 25px 35px -10px #0007,0 0 0 1px color-mix(in srgb,var(--accent) 45%,transparent);outline:none}
+.polaroid:focus-visible{outline:2px solid var(--accent);outline-offset:6px}
+.dragging .polaroid{transition:none}
+.photo{display:block;position:relative;width:100%;height:260px;overflow:hidden;background:#dedee0}
+.photo img{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none;transition:transform .5s cubic-bezier(.2,.8,.2,1),filter .4s;filter:saturate(.93)}
+.polaroid:hover .photo img,.polaroid:focus-visible .photo img{transform:scale(1.035);filter:saturate(1.04)}
+.caption{position:relative;display:flex;align-items:center;justify-content:center;flex:1;min-height:49px;padding:5px 0 7px;font:500 11px/1.4 var(--mono);letter-spacing:1px;white-space:nowrap;color:#44434a}
+.longCaption{font-size:9px;letter-spacing:.5px}
+.likeHint{position:absolute;right:0;color:#c16d86;opacity:0;transform:translateY(3px);transition:opacity .2s,transform .2s}
+.polaroid:hover .likeHint,.polaroid:focus-visible .likeHint{opacity:1;transform:none}
+.longCaption .likeHint{right:0;width:9px}
+.pagination{display:flex;align-items:center;justify-content:center;gap:2px;padding:15px 0 0}
+.dot{width:24px;height:30px;display:grid;place-items:center;border-radius:5px;padding:0}
+.dot:after{content:'';width:4px;height:4px;border-radius:5px;background:rgb(var(--ui-ink)/.22);transition:width .25s,background .25s,box-shadow .25s}
+.dot:hover:after{background:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 12%,transparent)}
+.activeDot:after{width:16px;background:var(--accent)}
+.heartBurst{position:absolute;inset:0;display:grid;place-items:center;color:#f07895;pointer-events:none;filter:drop-shadow(0 3px 8px #0005)}
+.heartBurst>svg{width:64px;height:64px;animation:heartPop 1s both}
+.heartBurst i{position:absolute;left:50%;top:50%;font:normal 20px/1 sans-serif;--dx:-43px;--dy:-75px;animation:heartScatter 1s both}
+.heartBurst i:nth-of-type(2){--dx:48px;--dy:-65px;font-size:15px;animation-delay:.05s}
+.heartBurst i:nth-of-type(3){--dx:15px;--dy:-105px;font-size:12px;animation-delay:.08s}
+.srOnly{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@keyframes heartPop{0%{transform:scale(.2);opacity:0}20%{transform:scale(1.2);opacity:1}40%{transform:scale(1);opacity:1}75%{transform:translateY(-12px) scale(1);opacity:1}100%{transform:translateY(-35px) scale(.8);opacity:0}}
+@keyframes heartScatter{0%,10%{transform:translate(-50%,-50%) scale(.3);opacity:0}30%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(.8);opacity:0}}
+@media(max-width:760px){.snapshots{margin:0 0 32px}.heading{padding-bottom:21px;margin-bottom:20px}.heading h1{font-size:36px;letter-spacing:-.8px}.viewport{padding:50px 0 43px;mask-image:linear-gradient(90deg,transparent,#000 10px,#000 calc(100% - 10px),transparent)}.board{border-radius:9px}.pagination{padding-top:10px}.dot{width:23px}.polaroid:before{width:46px;left:calc(50% - 23px);height:19px;top:-9px}.polaroid{width:176px;height:268px;padding:8px 8px 0}.photo{height:216px}.caption{font-size:9px;min-height:42px;letter-spacing:.7px}.longCaption{font-size:8px;letter-spacing:.2px}.photoSet{gap:24px;padding-right:24px}}
+@media(prefers-reduced-motion:reduce){.polaroid{transition:none}.heartBurst>svg,.heartBurst i{animation:none;opacity:1}.heartBurst i{display:none}.track{will-change:auto}.photo img,.likeHint,.dot:after{transition:none}.polaroid:hover .photo img,.polaroid:focus-visible .photo img{transform:none}}

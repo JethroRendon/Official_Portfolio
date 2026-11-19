@@ -19,8 +19,6 @@ export default function ThemeToggle() {
     try { localStorage.setItem(storageKey, next); } catch { /* Theme still works when storage is unavailable. */ }
   }
 
-  return <div className={styles.group} role="group" aria-label="Color theme">
-    <button type="button" onClick={() => choose('light')} aria-label="Use light mode" aria-pressed={theme === 'light'} title="Light mode"><Sun size={16}/></button>
-    <button type="button" onClick={() => choose('dark')} aria-label="Use dark mode" aria-pressed={theme === 'dark'} title="Dark mode"><Moon size={16}/></button>
-  </div>;
+  const label = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+  return <button className={styles.toggle} type="button" onClick={() => choose(theme === 'dark' ? 'light' : 'dark')} aria-label={label} title={label}><span key={theme} className={styles.icon} aria-hidden="true">{theme === 'dark' ? <Sun size={19}/> : <Moon size={19}/>}</span></button>;
 }

@@ -5,17 +5,21 @@ import { ArrowRight } from 'lucide-react';
 import styles from './WelcomeScreen.module.css';
 
 const greetings = [
-  { word: 'Hello', language: 'ENGLISH' },
-  { word: 'Hola', language: 'ESPAÑOL' },
-  { word: 'Bonjour', language: 'FRANÇAIS' },
-  { word: 'Hallo', language: 'DEUTSCH' },
-  { word: 'Kumusta', language: 'FILIPINO' },
+  { word: 'Hello', language: 'ENGLISH', lang: 'en' },
+  { word: 'Hola', language: 'ESPAÑOL', lang: 'es' },
+  { word: 'Bonjour', language: 'FRANÇAIS', lang: 'fr' },
+  { word: 'Hallo', language: 'DEUTSCH', lang: 'de' },
+  { word: 'Ciao', language: 'ITALIANO', lang: 'it' },
+  { word: '你好', language: '中文', lang: 'zh' },
+  { word: 'こんにちは', language: '日本語', lang: 'ja' },
+  { word: '안녕하세요', language: '한국어', lang: 'ko' },
+  { word: 'Kumusta', language: 'FILIPINO', lang: 'fil' },
 ];
 const storageKey = 'jethro-welcome-seen-v3';
 
 type WelcomeScreenProps = { children: ReactNode; autoEnterAfterMs?: number | null; rememberVisit?: boolean };
 
-export default function WelcomeScreen({ children, autoEnterAfterMs = 4400, rememberVisit = true }: WelcomeScreenProps) {
+export default function WelcomeScreen({ children, autoEnterAfterMs = 1800, rememberVisit = true }: WelcomeScreenProps) {
   const [phase, setPhase] = useState<'welcome' | 'leaving' | 'done'>('welcome');
   const [greeting, setGreeting] = useState(0);
   const enterButton = useRef<HTMLButtonElement>(null);
@@ -24,6 +28,7 @@ export default function WelcomeScreen({ children, autoEnterAfterMs = 4400, remem
   const enter = useCallback(() => setPhase(current => current === 'welcome' ? 'leaving' : current), []);
 
   useEffect(() => {
+    if (phase !== 'welcome') return;
     let seen = false;
     try { seen = rememberVisit && sessionStorage.getItem(storageKey) === 'true'; } catch { /* Storage is optional. */ }
     if (seen || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -32,15 +37,16 @@ export default function WelcomeScreen({ children, autoEnterAfterMs = 4400, remem
     }
     shown.current = true;
     dialog.current?.focus({ preventScroll: true });
+    const stepMs = autoEnterAfterMs === null ? 450 : Math.max(100, (autoEnterAfterMs - 200) / (greetings.length - 1));
     const greetingTimers = greetings.slice(1).map((_, index) =>
-      window.setTimeout(() => setGreeting(index + 1), (index + 1) * 850)
+      window.setTimeout(() => setGreeting(index + 1), (index + 1) * stepMs)
     );
     const enterTimer = autoEnterAfterMs === null ? undefined : window.setTimeout(enter, autoEnterAfterMs);
     return () => {
       greetingTimers.forEach(window.clearTimeout);
       if (enterTimer !== undefined) window.clearTimeout(enterTimer);
     };
-  }, [autoEnterAfterMs, enter, rememberVisit]);
+  }, [autoEnterAfterMs, enter, rememberVisit, phase]);
 
   useEffect(() => {
     if (phase === 'done') {
@@ -55,7 +61,7 @@ export default function WelcomeScreen({ children, autoEnterAfterMs = 4400, remem
   useEffect(() => {
     if (phase !== 'leaving') return;
     try { if (rememberVisit) sessionStorage.setItem(storageKey, 'true'); } catch { /* Still enter without storage. */ }
-    const timer = window.setTimeout(() => setPhase('done'), 650);
+    const timer = window.setTimeout(() => setPhase('done'), 180);
     return () => window.clearTimeout(timer);
   }, [phase, rememberVisit]);
 
@@ -75,7 +81,7 @@ export default function WelcomeScreen({ children, autoEnterAfterMs = 4400, remem
       <div className={styles.center}>
         <h1 id="welcome-title" className={styles.srOnly}>Welcome to Jethro Rendon's portfolio</h1>
         <div className={styles.greetingBlock} key={greeting} aria-hidden="true">
-          <div className={styles.greeting}><span className={styles.bullet}/>{greetings[greeting].word}</div>
+          <div className={styles.greeting} lang={greetings[greeting].lang} dir="auto">{greetings[greeting].word}</div>
           <span className={styles.language}>{greetings[greeting].language}</span>
         </div>
         <div className={styles.steps} aria-hidden="true">{greetings.map((item,index)=><span key={item.language} data-current={index === greeting || undefined} data-past={index < greeting || undefined}/>)}</div>
