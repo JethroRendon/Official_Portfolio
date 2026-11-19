@@ -2,8 +2,6 @@
 
 A personal portfolio presenting my work in web and mobile development, artificial intelligence, and community leadership. The interface draws inspiration from a code editor, bringing projects, technical skills, experience, and personal interests into one responsive workspace.
 
-**[View Portfolio](https://supremo-rnj.vivaciousdeer3.chatgpt.site)** · **[GitHub Profile](https://github.com/JethroRendon)**
-
 ## Overview
 
 I am a Bachelor of Science in Computer Science student majoring in Artificial Intelligence at West Visayas State University, Main Campus. My work focuses on practical software applications, thoughtful interfaces, and technology that supports communities. I also serve as Sangguniang Kabataan Chairperson of Barangay Poblacion, Anini-y, Antique.
