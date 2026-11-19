@@ -1,66 +1,74 @@
-# Jethro A. Rendon — Vercel portfolio
+# Jethro A. Rendon | Developer Portfolio
 
-This version uses standard Next.js on Vercel. It keeps the portfolio design, always-visible explorer, résumé content, selected profile image, animations, and project navigation. Includes the latest bold home layout, multilingual loading screen, sidequest section, animated AI/Build pointers, and a small golden pixel dog with movable-bone feeding, heart reactions, and idle sleep.
+A personal portfolio presenting my work in web and mobile development, artificial intelligence, and community leadership. The interface draws inspiration from a code editor, bringing projects, technical skills, experience, and personal interests into one responsive workspace.
 
-## Vercel deployment
+**[View Portfolio](https://supremo-rnj.vivaciousdeer3.chatgpt.site)** · **[GitHub Profile](https://github.com/JethroRendon)**
 
-1. Replace the contents of your Vercel-linked repository with the contents of this folder. Keep `package.json`, `package-lock.json`, `next.config.ts`, and `vercel.json` together at the project root.
-2. Commit and push the files.
-3. In Vercel, choose **Next.js** as the Framework Preset.
-4. Use **npm run build** as the Build Command and **npm ci** as the Install Command.
-5. Reset any custom Output Directory to the Next.js default (`.next`). Do not use `dist`, `out`, or `dist/server`.
-6. Use Node.js 22.x or 24.x. Set Root Directory to the folder containing this `package.json`; leave it empty if these files are at your repository root.
-7. Redeploy. Disable “Use existing Build Cache” for the first deployment after replacing the old project.
+## Overview
 
-You do not need Cloudflare credentials to build or view the portfolio.
+I am a Bachelor of Science in Computer Science student majoring in Artificial Intelligence at West Visayas State University, Main Campus. My work focuses on practical software applications, thoughtful interfaces, and technology that supports communities. I also serve as Sangguniang Kabataan Chairperson of Barangay Poblacion, Anini-y, Antique.
 
-## Contact inbox on Vercel
+## Features
 
-The old archive depended on a Cloudflare Worker-only database binding. Vercel does not supply that binding. This version accesses D1 over HTTPS from the server instead, without the `cloudflare:workers` module.
+- **Editor-inspired navigation:** Expandable folders, file search with `Ctrl/Cmd + K`, browser history support, and a collapsible menu on smaller screens.
+- **Project gallery:** All featured projects in one view, with screenshot carousels, enlarged previews, technology logos, and links to websites, source code, or design files.
+- **About and experience:** Interactive profile cards and dedicated sections for education, community service, and internship interests.
+- **Technical toolkit:** Animated technology rows with individual hover-to-pause behavior and grouped skill categories.
+- **Sidequest gallery:** Consistently sized portrait photographs with automatic movement, hover pause, dragging, and heart reactions.
+- **Appearance and accessibility:** A single light/dark theme toggle, saved theme preference, keyboard controls, and reduced-motion support.
+- **Interactive details:** A brief multilingual welcome screen, temporary color mixing in the headline, and a pixel dog with feeding and rest interactions.
+- **Professional resources:** In-browser résumé preview and a contact section with an optional database-backed message form.
 
-To enable contact submissions, configure a Cloudflare D1 database you control, apply `db/schema.sql` once in its SQL console, then set these Vercel environment variables and redeploy:
+## Featured Projects
 
-- `CLOUDFLARE_ACCOUNT_ID`
-- `CLOUDFLARE_D1_DATABASE_ID`
-- `CLOUDFLARE_API_TOKEN` with permission to edit D1 in that account
+| Project | Focus | Destination |
+| --- | --- | --- |
+| VEC-PRO | AI-assisted mosquito surveillance through AEDIFY Web and AEDEX Mobile | [Visit Website](https://vecprolanding.vercel.app/) |
+| StraySpot | Animal shelter management, pet discovery, and adoption interface design | [Visit Figma](https://www.figma.com/design/0Yo7UbsM4zDt6y2m3Wcxtq/SOFTENG---STRAYSAFE--CS2B-?node-id=0-1) |
+| Amogus / SYNT-ASK | Real-time multiplayer gameplay with NLP-based impostor detection | [Visit Website](https://amogus-nlp.vercel.app/) |
+| Groupify | Student group collaboration, task management, and file sharing | [View GitHub](https://github.com/JethroRendon/Groupify---CC-206-Final-Project) |
 
-If you already control the original D1 database, the same messages schema is compatible. The database managed by the separate ChatGPT-hosted Site is not automatically transferred to Vercel. This ZIP contains no production records or database credentials.
+The technologies listed on individual project cards describe those projects. The table below describes the portfolio application itself.
 
-Keep the token server-only: never prefix these variables with `NEXT_PUBLIC_`. Without this configuration, the portfolio still builds and the email/telephone links work; the contact form returns an honest unavailable response instead of pretending the message was saved.
+## Technology Stack
 
-For a low-traffic portfolio inbox, this adapter uses Cloudflare's D1 API. Cloudflare's API rate limits apply.
+| Area | Technology |
+| --- | --- |
+| Application framework | Next.js 16, React 19 |
+| Language | TypeScript |
+| Styling and animation | CSS Modules, global CSS, Tailwind CSS 4 tooling, CSS animations |
+| Interface icons | Lucide React and locally bundled technology logos |
+| Contact endpoint | Next.js Route Handler in the Node.js runtime |
+| Optional message storage | Cloudflare D1 through a server-side HTTPS adapter |
+| Deployment | Vercel |
 
-## Local development
+## Local Development
 
-Requires Node.js 22.13+ and npm:
+### Requirements
+
+- Node.js 22.13 or later, using a release supported by the configured Next.js version.
+- npm and the committed `package-lock.json`.
+
+From the project root, install dependencies and start the development server:
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Open the URL printed by Next.js. For a production check:
+Open the local address printed in the terminal. Database credentials are optional for viewing and building the portfolio.
 
-```sh
-npm run build
-npm start
-```
+### Available Commands
 
-For the optional inbox, copy `.env.example` to `.env.local` and fill in your own values. Build and navigation do not require those values.
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start the development server |
+| `npm run typecheck` | Check TypeScript types |
+| `npm test` | Run contact database adapter tests |
+| `npm run build` | Generate the production build |
+| `npm start` | Serve the production build locally |
 
-## Editing
-
-- `components/portfolio/data.ts`: projects, skills, experience.
-- `components/portfolio/Workspace.tsx`: page sections and navigation.
-- `components/portfolio/Explorer.tsx`: file explorer.
-- `components/portfolio/Contact.tsx`: form and contact links.
-- `app/api/contact/route.ts`: input validation and submission handling.
-- `db/index.ts`: server-only D1 HTTPS adapter.
-- `app/globals.css`: responsive layout and animations.
-- `public/jethro-night-avatar.jpg`: selected profile avatar.
-- `public/Jethro_Rendon_Resume.pdf`: downloadable résumé.
-
-## Validation
+Run the following before deploying application changes:
 
 ```sh
 npm run typecheck
@@ -68,73 +76,60 @@ npm test
 npm run build
 ```
 
-The Cloudflare/Vinext build files and unused starter dependencies have been removed from this Vercel version. This archive does not change the separate ChatGPT-hosted Site.
+## Contact Form Configuration
 
-## Sidebar reference update
+The contact endpoint stores messages in Cloudflare D1; it does not send email notifications. To enable submissions:
 
-The sidebar now uses `components/portfolio/Explorer.module.css`: a 440px desktop column, 55px profile avatar, 16px identity name, 12px portfolio caption, 14px explorer text, 39px root rows, and 37.5px nested rows. Tablet width is 320px; mobile keeps the explorer visible in a scrollable sticky panel. The selected profile image is the user-provided night-time pixel avatar.
+1. Create a Cloudflare D1 database under your account.
+2. Apply [`db/schema.sql`](db/schema.sql) once using the database SQL console.
+3. Copy `.env.example` to `.env.local` for local development, or configure the variables in the deployment environment.
+4. Provide the following server-side values:
 
-## Latest interactive updates
+| Variable | Purpose |
+| --- | --- |
+| `CLOUDFLARE_ACCOUNT_ID` | Account containing the D1 database |
+| `CLOUDFLARE_D1_DATABASE_ID` | Database receiving contact messages |
+| `CLOUDFLARE_API_TOKEN` | Account-scoped token with D1 edit permission |
 
-- `components/portfolio/HomeHero.tsx` and `HomeHero.module.css`: bold minimalist hero and anchored cursor labels.
-- `components/portfolio/WelcomeScreen.tsx` and `WelcomeScreen.module.css`: sans-serif multilingual greeting with the subtle grid.
-- `components/portfolio/CursorDog.tsx` and `CursorDog.module.css`: 42 × 35 px dog; follows the pointer, carries/chases dropped bones, chews, shows a heart, and sleeps when idle.
-- Click the bone to pick it up, then move and click to drop it; dragging also works. Escape cancels. Keyboard Enter on the bone feeds the dog directly.
+Keep credentials out of version control and do not prefix these variables with `NEXT_PUBLIC_`. Without this configuration, the portfolio remains available, while form submissions return an unavailable response. The adapter uses the Cloudflare API and is subject to its rate limits.
 
-The source ZIP includes all application files, public assets, lockfile, Vercel configuration, optional contact inbox schema, and setup instructions. Dependency folders and generated build output are excluded; `npm ci` restores dependencies.
+The endpoint validates input, checks request origins, includes a honeypot field, and limits repeat submissions from the same email address. Submitted messages and production credentials are not included in this repository.
 
-## Clean source package
+## Deployment to Vercel
 
-Only assets used by this portfolio are included: the current profile image, résumé PDF, favicon, JetBrains Mono font, and Barlow Bold font. Earlier avatar variants, the design-reference screenshot, unused fonts, demo widgets, and obsolete CSS have been removed. The README is the setup guide.
+1. Push the project files to your GitHub repository and import the repository into Vercel.
+2. Select **Next.js** as the framework preset.
+3. Set the root directory to the folder containing `package.json`.
+4. Use `npm ci` for installation and `npm run build` for the build command. These settings are also declared in `vercel.json`.
+5. Leave the output directory at the framework default and select a supported Node.js runtime that meets the requirements above.
+6. Add the contact form environment variables if message storage is required, then deploy.
 
-The AI and Build cursor labels float independently while staying anchored to the headline. Their movement follows the visitor’s reduced-motion preference.
+The contact database is configured separately from the website deployment. An existing hosted portfolio database is not automatically copied to a new deployment.
 
-## Appearance
+## Project Organization
 
-Use the sun/moon buttons beside the profile to choose light or dark mode. The selected theme is saved in the browser and applied before the page renders on return visits. The explorer, loading screen, home, project panels, contact form, and dog controls support both themes.
+| Location | Purpose |
+| --- | --- |
+| `app/` | Application entry point, metadata, shared styles, and contact API route |
+| `components/portfolio/` | Portfolio sections and reusable interface components |
+| `components/portfolio/data.ts` | Project descriptions, technology stacks, skills, and experience |
+| `components/portfolio/projectMedia.ts` | Project destinations, preview images, and captions |
+| `public/` | Profile image, résumé, fonts, technology logos, and gallery assets |
+| `db/` | Contact inbox database access and schema |
+| `docs/` | Feature notes and asset attribution references |
 
-## Toolkit and résumé
+## Content Maintenance
 
-The toolkit uses three animated rows of local icons, with hover-to-pause, a pause/play control, and a static wrapped layout for reduced-motion preferences. Skills and contact information follow the updated November 2026 résumé; Dart and Flutter are included from Groupify project experience. The current PDF is in `public/Jethro_Rendon_Resume.pdf`. Icon shapes are bundled locally from Simple Icons (CC0); the condensed toolkit heading uses Barlow Condensed. No external asset requests are needed at runtime.
+Update portfolio content in `components/portfolio/data.ts` and project links or screenshots in `components/portfolio/projectMedia.ts`. Maintain gallery photographs in `public/` and their entries in `components/portfolio/SidequestSnapshots.tsx`.
 
-The full stack is grouped into editor-style panels with category accents and résumé-backed skill counts. Hover pauses only the toolkit row under the pointer; the pause/play control still affects all rows.
+The current profile image is `public/jethro-profile.webp`. When replacing it, update the matching favicon, PNG icon, and Apple touch icon, then revise the icon version values in `app/layout.tsx`. Replace `public/Jethro_Rendon_Resume.pdf` when publishing a new résumé and update its version in `components/portfolio/data.ts`.
 
-## Interactive about page
+Set the deployment origin in `app/layout.tsx` when moving the application to a different domain.
 
-`about.md` opens a résumé-based profile with keyboard-accessible Overview, Education, and Leadership tabs; a synchronized, copyable JSON card; expandable coursework and credential notes; résumé preview; and navigation to the toolkit, thesis project, and leadership experience. The design supports both themes, smaller screens, and reduced motion.
+## Author and Attribution
 
-## Dog interactions
+**Jethro A. Rendon**
 
-Click or tap the dog, or focus it and press Enter/Space, to pause it for 25 seconds. After a bone, it chews, displays three hearts for three seconds, then rests for ten seconds before following the latest pointer position. The feeder pauses during the break. Repeated petting starts a fresh 25-second break. Reduced-motion preferences are preserved.
+Computer Science Student · Web and Mobile Development · Artificial Intelligence
 
-The About overview uses Jethro’s supplied introduction. Matching editor-style panels in `sidequest.md` present his travel, beach, freediving, hiking, fashion, volleyball, basketball, and jogging interests, with responsive stacking and both themes supported.
-
-The “Outside the Editor” section lives in `PersonalInterests.tsx` and opens in `sidequest.md`; it is no longer rendered in `about.md`.
-
-## Contact cubes
-
-`contact.json` matches the supplied reference with a condensed “What’s Next?” heading, four local SVG isometric cubes with hover/focus highlights, and a developer profile code card. The cubes link to GitHub, LinkedIn, the current résumé, and email. “Compose a message” expands the validated inbox form; it uses the existing contact API. No LeetCode URL was supplied, so the fourth professional resource is the résumé.
-
-The contact résumé cube opens the PDF in a new browser tab for preview; it does not force a download.
-
-About page: refined editor tabs with keyboard navigation, synchronized profile JSON with copy feedback, exclusive coursework accordions, résumé preview, and a direct link to sidequest.md. Responsive light and dark layouts are included.
-
-The résumé PDF was replaced with the supplied November 18, 2026 version. Project pages include the résumé timelines; Groupify is listed as Full Stack Development, and VEC-PRO identifies AEDEX Mobile and AEDIFY Web. Existing résumé links preview the new PDF in a browser tab.
-
-About UI: reference-inspired two-column cards with preview panels, tags, expandable introduction and learning notes, résumé preview, and links to experience, VEC-PRO, toolkit, contact, and Sidequest. Light/dark themes and a single-column mobile layout are supported.
-
-About UI now uses the supplied video’s overlapping coral, apricot, and yellow card deck. Cards lift and move to the front on hover/focus, open accessible story panels on activation, and become swipeable cards on mobile. The project card was removed from About; the project section and résumé are retained.
-
-## Project screenshot galleries
-
-Project cards include the supplied website, GitHub, and Figma destinations. Edit `components/portfolio/projectMedia.ts` to change links, captions, or screenshot order. Screenshots are optimized WebP files in `public/projects`. Groupify images are extracted prototype screens from the supplied project document. Galleries support arrows, dots, keyboard navigation, swiping, and enlarged viewing.
-
-The complete project gallery is available at `#projects`, through `projects/gallery.tsx` in the explorer, or through the homepage’s View all projects button. `ProjectGallery.tsx` renders all four projects together and is reused on the homepage. Project files and legacy project links open and focus cards in the shared gallery. There are no separate project detail pages.
-
-Project cards use a compact gallery layout with preview images, roles, descriptions, stack icons, and the specified Visit Website / View GitHub / Visit Figma buttons. Screenshot enlargement stays on the current page.
-
-Each project now has a labeled Tech Stack row. Edit the `techStack` arrays in `components/portfolio/data.ts` to maintain each project’s languages, frameworks, services, and AI models.
-
-Redundant code-comment section labels have been removed across the portfolio. Primary headings, gallery content, tech stacks, and the IDE file explorer remain available.
-
-Project technology icons use locally bundled brand logos through `TechnologyLogo.tsx`; publisher asset sources are documented in `docs/project-brand-logos.md`. AI model names remain text labels.
+Technology logo sources are documented in [Project Brand Logos](docs/project-brand-logos.md). Third-party brands and project assets remain subject to their respective owners' terms.
