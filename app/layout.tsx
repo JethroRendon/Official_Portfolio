@@ -1,6 +1,7 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import './theme.css';
+export const viewport: Viewport = { width: 'device-width', initialScale: 1, viewportFit: 'cover', interactiveWidget: 'resizes-content' };
 export const metadata: Metadata = {
  title: 'Jethro A. Rendon | AI, Web & Mobile Developer',
  description: 'Jethro A. Rendon — Computer Science student majoring in Artificial Intelligence at WVSU, web and mobile developer, and SK Chairman of Barangay Poblacion.',

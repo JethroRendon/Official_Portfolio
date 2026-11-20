@@ -54,6 +54,7 @@ export default function HomeHero({ navigate }: { navigate: (target: View) => voi
   const code = sample && (tool === 'color' || tool === 'opacity') ? sample : tool === 'color' ? `color: ${palettes[palette][0]};` : tool === 'type' ? `font-size: ${size}%;` : tool === 'spacing' ? `letter-spacing: ${(spacing / 100).toFixed(2)}em;` : tool === 'radius' ? `border-radius: ${radius}px;` : `opacity: ${(opacity / 100).toFixed(2)};`;
 
   function beginDrag(event: ReactPointerEvent<HTMLElement>, kind: Tool, direction = 1) {
+    if (!event.isPrimary || event.button !== 0) return;
     event.preventDefault();
     event.stopPropagation();
     event.currentTarget.setPointerCapture(event.pointerId);
@@ -130,14 +131,14 @@ export default function HomeHero({ navigate }: { navigate: (target: View) => voi
     const key = `${row}-${index}`;
     return <span key={key} data-glyph={key} className={styles.glyph} style={{ '--glyph-delay': `${row * 110 + index * 18}ms`, '--swipe-x': `${swipes[key]?.x ?? 0}px`, '--swipe-y': `${swipes[key]?.y ?? 0}px`, '--swipe-angle': `${swipes[key]?.angle ?? 0}deg`, '--swipe-scale': swipes[key]?.scale ?? 1, color: paint[key], opacity: inkOpacity[key] ?? opacity / 100 } as CSSProperties}>{letter}</span>;
   });
-  const endDrag = () => { drag.current = null; };
+  const endDrag = () => { drag.current = null; lastSwipe.current = null; setBrush(null); settleLetters(); };
   const help = tool === 'color' ? 'Swipe across the letters to blend their colors.' : tool === 'type' ? 'Drag a corner handle to resize the headline.' : tool === 'spacing' ? 'Drag the headline left or right to adjust tracking.' : tool === 'radius' ? 'Drag a gold handle to round the shapes.' : 'Move the lens across letters to change opacity.';
 
   return <section className={styles.hero} aria-label="Introduction" style={{ '--play-accent': accent } as CSSProperties}>
     <div className={styles.composition}>
       <div className={styles.hello}><span style={{ borderRadius: `${radius + 12}px` }}>Hello, I’m Jethro.</span></div>
       <div className={styles.nameStage}>
-        <div data-mixing={mixing || undefined} data-tool={tool ?? undefined} onPointerDown={event => { if ((event.target as HTMLElement).closest('button')) return; lastSwipe.current = { x: event.clientX, y: event.clientY }; if (event.pointerType === 'touch' && (tool === null || tool === 'color')) event.currentTarget.setPointerCapture(event.pointerId); if (tool === 'spacing') beginDrag(event, 'spacing'); else paintGlyph(event); }} onPointerMove={event => { moveDrag(event); if (tool === null || tool === 'color') swipeLetters(event); if (tool === 'opacity') paintGlyph(event); if (tool === 'color') { const bounds = event.currentTarget.getBoundingClientRect(); setBrush({ x: event.clientX - bounds.left, y: event.clientY - bounds.top }); } }} onPointerUp={endDrag} onPointerCancel={endDrag} onPointerLeave={() => { setBrush(null); lastSwipe.current = null; settleLetters(); }} className={`${styles.wordFrame} ${tool === 'type' || tool === 'spacing' ? styles.measured : ''} ${tool === 'radius' ? styles.roundedFrame : ''}`} style={{ borderRadius: `${radius}px` }}>
+        <div data-mixing={mixing || undefined} data-tool={tool ?? undefined} onPointerDown={event => { if (!event.isPrimary || event.button !== 0 || (event.target as HTMLElement).closest('button')) return; lastSwipe.current = { x: event.clientX, y: event.clientY }; if (event.pointerType === 'touch' && (tool === null || tool === 'color')) event.currentTarget.setPointerCapture(event.pointerId); if (tool === 'spacing') beginDrag(event, 'spacing'); else paintGlyph(event); }} onPointerMove={event => { moveDrag(event); if (tool === null || tool === 'color') swipeLetters(event); if (tool === 'opacity') paintGlyph(event); if (tool === 'color') { const bounds = event.currentTarget.getBoundingClientRect(); setBrush({ x: event.clientX - bounds.left, y: event.clientY - bounds.top }); } }} onPointerUp={endDrag} onPointerCancel={endDrag} onLostPointerCapture={endDrag} onPointerLeave={() => { setBrush(null); lastSwipe.current = null; settleLetters(); }} className={`${styles.wordFrame} ${tool === 'type' || tool === 'spacing' ? styles.measured : ''} ${tool === 'radius' ? styles.roundedFrame : ''}`} style={{ borderRadius: `${radius}px` }}>
           <h1 className={styles.word} aria-label="AI student, web and mobile developer" style={{ '--name-scale': size / 100, '--name-spacing': `${spacing / 100}em` } as CSSProperties}>
             <span className={styles.row} style={{ color: palettes[palette][0] }}><span className={styles.aiWord}>{text('AI STUDENT', 0)}{!tool && <span className={`${styles.cursor} ${styles.aiCursor}`} aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M2 18 7 2 10 9 18 12Z" fill="currentColor"/></svg><span>AI</span></span>}</span></span>
             <span className={styles.row} style={{ color: palettes[palette][1] }}><span>{text('WEB & MOBILE', 1)}</span></span>

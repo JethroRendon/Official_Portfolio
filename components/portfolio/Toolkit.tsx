@@ -60,11 +60,13 @@ function ToolTile({ tool }: { tool: Tool }) {
 
 export default function Toolkit() {
  const [paused, setPaused] = useState(false);
+ const [pausedRows, setPausedRows] = useState<number[]>([]);
+ const toggleRow = (index: number) => setPausedRows(current => current.includes(index) ? current.filter(value => value !== index) : [...current, index]);
  return <section className={styles.toolkit} aria-labelledby="toolkit-title">
   <header className={styles.heading}><h1 id="toolkit-title">MY TOOLKIT</h1><p>The stack I reach for when bringing ideas to life.</p></header>
   <div className={styles.motionBar}><span>CODE · BUILD · EXPLORE</span><button aria-label={paused ? 'Play toolkit animation' : 'Pause toolkit animation'} aria-pressed={paused} onClick={() => setPaused(value => !value)}>{paused ? <Play size={12}/> : <Pause size={12}/>}<span>{paused ? 'Play' : 'Pause'}</span></button></div>
   <div className={`${styles.lanes} ${paused ? styles.paused : ''}`} aria-label="Tools and technologies">
-   {rows.map((row, index) => <div className={`${styles.lane} ${index === 1 ? styles.reverse : ''}`} key={index}>
+   {rows.map((row, index) => <div className={`${styles.lane} ${index === 1 ? styles.reverse : ''}`} key={index} role="button" tabIndex={0} aria-label={`${pausedRows.includes(index) ? 'Resume' : 'Pause'} technology row ${index + 1}`} aria-pressed={pausedRows.includes(index)} data-paused={pausedRows.includes(index)} onClick={() => toggleRow(index)} onKeyDown={event => { if(event.key === 'Enter' || event.key === ' '){event.preventDefault();toggleRow(index);} }}>
     <div className={styles.track} style={{ '--duration': `${48 + index * 7}s` } as CSSProperties}>
      <div className={styles.toolSet}>{row.map(tool => <ToolTile tool={tool} key={tool.name}/>)}</div>
      <div className={`${styles.toolSet} ${styles.duplicate}`} aria-hidden="true">{row.map(tool => <ToolTile tool={tool} key={tool.name}/>)}</div>

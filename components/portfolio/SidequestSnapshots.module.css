@@ -40,3 +40,8 @@
 @keyframes heartScatter{0%,10%{transform:translate(-50%,-50%) scale(.3);opacity:0}30%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(.8);opacity:0}}
 @media(max-width:760px){.snapshots{margin:0 0 32px}.heading{padding-bottom:21px;margin-bottom:20px}.heading h1{font-size:36px;letter-spacing:-.8px}.viewport{padding:50px 0 43px;mask-image:linear-gradient(90deg,transparent,#000 10px,#000 calc(100% - 10px),transparent)}.board{border-radius:9px}.pagination{padding-top:10px}.dot{width:23px}.polaroid:before{width:46px;left:calc(50% - 23px);height:19px;top:-9px}.polaroid{width:176px;height:268px;padding:8px 8px 0}.photo{height:216px}.caption{font-size:9px;min-height:42px;letter-spacing:.7px}.longCaption{font-size:8px;letter-spacing:.2px}.photoSet{gap:24px;padding-right:24px}}
 @media(prefers-reduced-motion:reduce){.polaroid{transition:none}.heartBurst>svg,.heartBurst i{animation:none;opacity:1}.heartBurst i{display:none}.track{will-change:auto}.photo img,.likeHint,.dot:after{transition:none}.polaroid:hover .photo img,.polaroid:focus-visible .photo img{transform:none}}
+
+
+.viewport{touch-action:pan-y pinch-zoom}
+@media(max-width:760px){.pagination{flex-wrap:wrap;gap:0;max-width:100%}.dot{width:32px;height:44px}.caption{font-size:10px}.longCaption{font-size:8px}.likeHint{opacity:.65;transform:none}}
+@media(hover:none){.polaroid:hover{transform:rotate(var(--tilt));box-shadow:0 16px 25px -8px #0006}.polaroid:hover .photo img{transform:none}}

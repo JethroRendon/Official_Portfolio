@@ -39,3 +39,9 @@
 @media(prefers-reduced-motion:reduce){.cube,.topFace,.leftFace,.rightFace,.outline,.channel>span svg,.composer>summary,.composer>summary>svg:last-child{transition:none}.channel:hover .cube,.channel:focus-visible .cube{transform:none}.spin{animation:none}}
 
 @media(max-width:760px){.field input,.field textarea{font-size:16px}.messageField{grid-template-columns:minmax(0,1fr);padding-right:0}.messageField>span{padding-top:0}.codeCard pre{overflow-wrap:anywhere}.heading h1{font-size:clamp(35px,10vw,43px)}}
+
+
+@media(max-width:760px){
+ .heading>p{font-size:16px}.channel>span{font-size:12px}.channel>span svg{opacity:1;transform:none}.codeCard pre{font-size:12px;padding:18px 14px}.composer>summary{font-size:12px;min-height:44px}.field{grid-template-columns:minmax(0,1fr);gap:6px;margin-bottom:18px}.field>span:first-child{font-size:12px}.field input,.field textarea{font-size:16px;min-height:44px}.comma{display:none}.messageField{grid-template-columns:minmax(0,1fr);padding-right:0}.comment,.footnote{font-size:11px}.sendButton{min-height:48px;font-size:13px}.success,.error{font-size:13px}.contactMeta{font-size:11px}.contactMeta>a{min-height:44px}
+}
+@media(hover:none){.channel .topFace{fill:var(--active-top)}.channel .leftFace{fill:var(--active-left)}.channel .rightFace{fill:var(--active-right)}}

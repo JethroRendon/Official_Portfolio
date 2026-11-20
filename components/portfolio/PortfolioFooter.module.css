@@ -16,3 +16,6 @@
 @media(max-width:760px){.footer{margin-top:52px;padding-bottom:80px}.contactPanel{padding:28px 23px;gap:12px;border-radius:11px}.contactPanel p{font-size:9px;margin-bottom:10px}.contactButton{font-size:40px;min-height:48px;gap:16px;letter-spacing:-1px}.contactIcon{width:37px;height:37px;flex-basis:37px}.contactIcon svg{width:20px}.signatureArt{display:none}.bottom{align-items:flex-start;gap:14px;padding-top:21px;margin-top:22px}.signature{gap:9px}.signature strong{font-size:11px}.signature span{font-size:7px;max-width:180px}.toTop{min-height:44px;padding:7px 10px;font-size:8px}.compact{margin-top:45px;padding-bottom:65px}}
 @media(max-width:360px){.bottom{flex-wrap:wrap;gap:16px}.signature span{max-width:none}.contactButton{font-size:36px}.toTop{margin-left:43px}}
 @media(prefers-reduced-motion:reduce){.contactIcon,.signatureArt img{transition:none}.contactButton:hover .contactIcon,.contactPanel:hover .signatureArt img{transform:none}}
+
+
+@media(max-width:760px){.footer{padding-bottom:92px}.contactPanel{padding:24px 20px;gap:14px}.contactPanel p{font-size:13px}.signature strong{font-size:12px}.signature span{font-size:10px}.bottom{flex-wrap:wrap;gap:16px}.toTop{min-height:44px;font-size:11px}}

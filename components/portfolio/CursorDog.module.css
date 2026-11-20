@@ -23,3 +23,8 @@
 @keyframes love{0%,100%{transform:translateY(0) scale(.9)}50%{transform:translateY(-5px) scale(1.05)}}
 @media(max-width:760px){.feeder{right:14px;bottom:14px}.boneButton{height:44px}.hint{font-size:8px}}
 @media(prefers-reduced-motion:reduce){.tail,.walking .backLeg,.walking .frontLeg,.eating .head,.happy .mouthBone,.heart{animation:none}.boneButton{transition:none}}
+
+
+@media(max-width:760px){.feeder{right:max(14px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom))}.hint{font-size:10px;white-space:normal;width:max-content;max-width:min(280px,calc(100vw - 28px));text-align:right}.pet:after{content:'';position:absolute;inset:-7px;background:transparent}.boneButton{width:48px;height:48px}}
+/* Keep the feeder out of scrolling content on phones. */
+@media(max-width:760px){.feeder{top:calc(4px + env(safe-area-inset-top));right:max(10px,env(safe-area-inset-right));bottom:auto;z-index:46}.hint{top:calc(100% + 8px);bottom:auto}}

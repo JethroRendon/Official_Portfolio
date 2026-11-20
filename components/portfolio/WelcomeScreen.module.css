@@ -13,3 +13,6 @@
 
 .greeting:lang(ja),.greeting:lang(ko),.greeting:lang(zh){letter-spacing:0;font-weight:400}
 @media(max-width:760px){.greeting{font-size:clamp(32px,10vw,47px);padding-inline:18px}.greeting:lang(ja),.greeting:lang(ko){font-size:clamp(30px,9vw,43px)}}
+
+
+@media(max-width:760px){.enter{min-height:44px;font-size:12px}.language{font-size:10px}.signature{font-size:9px;letter-spacing:0}.identity>small{font-size:8px}.bottom{flex-wrap:wrap;justify-content:space-between}}

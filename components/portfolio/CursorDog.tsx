@@ -49,6 +49,7 @@ export default function CursorDog() {
     let state: Phase = 'idle', frame = 0, previousTime = 0, idleTimer = 0, armedAt = 0;
     let treat: Point = { ...current }, pickup: Point | null = null, movedBone = false, suppressClickUntil = 0;
     const timers: number[] = [];
+    let touchStart: Point | null = null;
     const clamp = (point: Point): Point => ({ x: Math.min(Math.max(point.x, 33), window.innerWidth - 33), y: Math.min(Math.max(point.y, 56), window.innerHeight - 10) });
     const update = (next: Phase) => {
       state = next; setPhase(next);
@@ -142,11 +143,16 @@ export default function CursorDog() {
       if (!reduce.matches) { target = lastPointer; queue(); }
     }
     function down(event: PointerEvent) {
+      if(event.pointerType === 'touch' && event.isPrimary) touchStart = { x:event.clientX, y:event.clientY };
       if (state !== 'carrying' || (event.target as Element).closest('[data-bone-button]')) return;
       event.preventDefault(); event.stopPropagation(); suppressClickUntil = Date.now() + 400;
       place({ x: event.clientX, y: event.clientY });
     }
     function up(event: PointerEvent) {
+      const touch = touchStart; touchStart = null;
+      if(event.pointerType === 'touch' && touch && Math.hypot(event.clientX-touch.x,event.clientY-touch.y)<12 && (state==='idle'||state==='sleeping') && !(event.target as Element).closest('button,a,input,textarea,select,summary,label,[role=button]')) {
+        lastPointer = clamp({x:event.clientX-26,y:event.clientY+46}); update('idle'); target = lastPointer; queue(); rest();
+      }
       if (state === 'carrying' && pickup && (event.pointerType === 'touch' || Math.hypot(event.clientX - pickup.x, event.clientY - pickup.y) > 12)) { suppressClickUntil = Date.now() + 400; place({ x: event.clientX, y: event.clientY }); }
     }
     function click(event: MouseEvent) { const shouldSuppress = event.detail > 0 && Date.now() < suppressClickUntil; suppressClickUntil = 0; if (shouldSuppress) { event.preventDefault(); event.stopPropagation(); } }

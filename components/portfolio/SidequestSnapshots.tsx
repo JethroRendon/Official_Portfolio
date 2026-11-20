@@ -134,7 +134,8 @@ export default function SidequestSnapshots() {
   const drag = dragging.current;
   if (!drag || drag.id !== event.pointerId) return;
   const dx = event.clientX - drag.startX, dy = event.clientY - drag.startY;
-  if (!drag.moved && Math.hypot(dx, dy) > 7) {
+  if (!drag.moved && Math.abs(dy) > 8 && Math.abs(dy) > Math.abs(dx)) { finishPointer(event, true); return; }
+  if (!drag.moved && Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy)) {
    drag.moved = true;
    setIsDragging(true);
   }
@@ -154,6 +155,7 @@ export default function SidequestSnapshots() {
   setIsDragging(false);
   if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
   if (!cancelled && !drag.moved && drag.photo !== null) sendHeart(drag.photo);
+  if (!cancelled && event.pointerType === 'touch') restUntil.current = performance.now() + (drag.moved ? 300 : 1200);
   if (!cancelled && drag.moved && event.pointerType === 'touch' && !reducedMotion.current && event.timeStamp - drag.lastTime < 100) momentum.current = drag.velocity;
  }
 

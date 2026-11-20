@@ -61,7 +61,7 @@ export default function ExperienceProfile({ selectedId }: { selectedId: string }
     return <li className={`${styles.step} ${styles[entry.id === 'student' ? 'student' : entry.id === 'sk-chairperson' ? 'leader' : 'next']}`} key={entry.id}>
      <span className={styles.node} data-timeline-node aria-hidden="true"><span/></span>
      <article id={`chapter-${entry.id}`} ref={el => { entries.current[entry.id] = el; }} className={`${styles.card} ${selected ? styles.active : ''}`} aria-labelledby={`title-${entry.id}`}>
-      <div className={styles.cardMain}>
+      <div className={styles.cardMain} tabIndex={0} role="region" aria-label={`${entry.name} experience details`}>
        <header className={styles.cardHeading}><h2 id={`title-${entry.id}`}>{entry.name}</h2><h3>{copy.role}</h3></header>
        <div className={styles.date}><CalendarDays size={15} aria-hidden="true"/><span>{entry.date}</span></div>
        <p className={styles.description}>{copy.intro}</p>

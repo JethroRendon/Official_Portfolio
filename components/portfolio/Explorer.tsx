@@ -4,6 +4,7 @@ import { ChevronDown, ChevronRight, File, Folder, Atom, Braces, Diamond, Menu, S
 import { projects, experiences } from './data';
 import styles from './Explorer.module.css';
 import ThemeToggle from './ThemeToggle';
+import useScrollLock from './useScrollLock';
 
 export type View = 'home' | 'about' | 'skills' | 'community' | 'contact' | 'projects' | `project/${string}` | `experience/${string}`;
 export function resolveView(value: string): View {
@@ -30,17 +31,17 @@ export default function Explorer({ view, navigate, onSearch }: { view: View; nav
   return () => query.removeEventListener('change', update);
  }, []);
 
+ useScrollLock(mobileOpen && isMobile);
+ useEffect(() => { setMobileOpen(false); }, [view]);
+
  useEffect(() => {
   if (!mobileOpen || !isMobile) return;
   const main = document.getElementById('main-content');
   const previousInert = main?.inert || false;
-  const previousOverflow = document.body.style.overflow;
-  document.body.style.overflow = 'hidden';
   if (main) main.inert = true;
   const frame = requestAnimationFrame(() => closeButton.current?.focus());
   return () => {
    cancelAnimationFrame(frame);
-   document.body.style.overflow = previousOverflow;
    if (main) main.inert = previousInert;
   };
  }, [mobileOpen, isMobile]);
@@ -50,7 +51,7 @@ export default function Explorer({ view, navigate, onSearch }: { view: View; nav
   if (restoreFocus) requestAnimationFrame(() => menuButton.current?.focus());
  }
  function openFile(target: View) { closeMenu(false); navigate(target); }
- function searchFiles() { closeMenu(); onSearch(); }
+ function searchFiles() { closeMenu(false); onSearch(); }
  function trapMenu(event: KeyboardEvent<HTMLElement>) {
   if (!isMobile || !mobileOpen) return;
   if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); closeMenu(); return; }

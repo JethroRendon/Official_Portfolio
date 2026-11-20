@@ -42,3 +42,28 @@
 
 .home-work{padding-top:34px;scroll-margin-top:75px}.home-work>.section-divider:first-child{margin-top:0}
 @media(max-width:760px){.home-work{padding-top:24px;scroll-margin-top:112px}}
+
+
+/* Touch layouts keep content reachable around browser chrome and the keyboard. */
+html{scroll-padding-top:65px}
+img{max-width:100%}
+@media(max-width:760px){
+ html{scroll-padding-top:calc(112px + env(safe-area-inset-top))}
+ .workspace,.main-content,.page-content{max-width:100%;min-width:0}
+ .content-width{width:calc(100% - 36px);margin-inline:auto}
+ .icon-button{width:44px;height:44px;flex-shrink:0}
+ .editor-bar{height:48px;padding-inline:14px}.editor-bar>span{min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+ .back-link{min-height:44px;font-size:12px;margin-bottom:24px}
+ .section-divider{align-items:center;gap:12px;flex-wrap:wrap;font-size:11px}
+ .modal-shade{animation:none;overscroll-behavior:contain;padding:max(12px,env(safe-area-inset-top)) max(10px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left))}
+ .command-dialog{display:flex;flex-direction:column;max-height:calc(100dvh - 24px)}
+ .command-search{padding:10px;gap:8px;flex-shrink:0}.command-search input{font-size:16px;min-height:44px}
+ .command-results{min-height:0;max-height:55dvh;overscroll-behavior:contain;overflow-y:auto}
+ .command-results button{min-height:48px;font-size:12px}.command-results button>span{display:none}
+ .command-foot{font-size:10px;padding:12px;gap:12px;flex-shrink:0}
+ .demo-dialog{width:100%;max-height:calc(100dvh - 24px);overscroll-behavior:contain}
+ .demo-dialog-header{position:sticky;top:0;z-index:2;padding:6px 12px;background:var(--light-panel,#121215);font-size:12px}
+ .demo-hint{font-size:12px;line-height:1.7;padding:14px;margin:0}
+ input,textarea,select{scroll-margin-block:125px 90px}
+}
+@media(max-height:500px) and (max-width:1000px){.modal-shade{align-items:flex-start}.demo-dialog,.command-dialog{max-height:calc(100dvh - 24px)}}

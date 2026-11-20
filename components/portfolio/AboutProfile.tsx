@@ -43,7 +43,7 @@ export default function AboutProfile({ navigate }: { navigate: (view: View) => v
  }
  return <div className={styles.about}>
   <div className={styles.topline}><a href={resumeUrl} target="_blank" rel="noreferrer">view résumé<ArrowUpRight size={14} aria-hidden="true"/><span className={styles.srOnly}> (opens in a new tab)</span></a></div>
-g  <div className={styles.deck} role="group" aria-label="Three sides of Jethro. Select a card to read more.">
+  <div className={styles.deck} role="group" aria-label="Three sides of Jethro. Select a card to read more.">
    {cards.map(card=><button key={card.id} ref={el=>{buttons.current[card.id]=el;}} className={`${styles.card} ${styles[card.id]}`} onClick={()=>openStory(card.id)} aria-expanded={selected===card.id} aria-controls="about-story" aria-label={`Read about Jethro as ${card.id==='student'?'a student':card.id==='leader'?'a community leader':'a developer'}`}>
     <span className={styles.cardTop}><span>{card.number} / ABOUT</span><ArrowUpRight size={19} strokeWidth={1.5} aria-hidden="true"/></span>
     <span className={styles.sketch}><CardSketch story={card.id}/></span>

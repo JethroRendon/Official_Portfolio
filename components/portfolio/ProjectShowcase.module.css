@@ -16,3 +16,12 @@
 .technologyLogo{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;flex:0 0 20px;vertical-align:middle}.technologyLogo>img,.technologyLogo>svg{display:block;width:100%;height:100%;object-fit:contain;filter:none}.logoPlate{background:#fff;padding:2px;border-radius:3px}.visit .technologyLogo{width:16px;height:16px;flex-basis:16px}
 
 .technologyLogo>img.paddedBrandLogo{transform:scale(1.8)}
+
+
+.frame{touch-action:pan-y pinch-zoom}
+@media(max-width:760px){
+ .galleryControls{flex-wrap:wrap;gap:4px 8px}.dots{flex-wrap:wrap;gap:0;max-width:100%}.dots button{width:32px;min-width:32px;min-height:44px;padding:4px}.arrows{margin-left:auto;gap:4px}.arrows>button{width:44px;height:44px}.arrows>span{font-size:12px}
+ .card .summary{font-size:16px;line-height:1.75}.card .role{font-size:13px}.card .projectName{font-size:26px}.card .tags>li{font-size:12px}.stackLabel{font-size:10px}.visit{font-size:12px;min-height:44px;letter-spacing:.6px}.card .badge{font-size:9px}.card .frame{aspect-ratio:1.8}
+ .galleryHeading>p{font-size:16px}.galleryEyebrow{font-size:10px}.galleryEyebrow>span:last-child{font-size:9px}.galleryHint{font-size:10px}.browseAll{font-size:11px;min-height:44px}
+ .expanded .frame{aspect-ratio:1.3;max-height:55dvh}.expanded .page{height:55dvh;aspect-ratio:auto}.expanded .mobile{aspect-ratio:1}.expanded .mobile .openImage{padding:14px}.caption{font-size:12px}
+}

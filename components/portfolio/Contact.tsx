@@ -27,15 +27,19 @@ export default function Contact() {
  const [error, setError] = useState('');
  async function submit(event: React.FormEvent<HTMLFormElement>) {
   event.preventDefault();
+  if(state === 'sending') return;
   const form = event.currentTarget;
   const data = Object.fromEntries(new FormData(form).entries());
   setState('sending'); setError('');
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), 15000);
   try {
-   const response = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+   const response = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data), signal: controller.signal });
    const result = await response.json() as { error?: string };
    if (!response.ok) throw new Error(result.error || 'Unable to save your message. Please try again.');
    setState('success'); form.reset();
-  } catch (err) { setState('error'); setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.'); }
+  } catch (err) { setState('error'); setError(err instanceof Error && (err.name === 'TimeoutError' || err.name === 'AbortError') ? 'The connection timed out. Your message may not have been saved. Please try again or use the email link.' : err instanceof Error ? err.message : 'Something went wrong. Please try again.'); }
+  finally { window.clearTimeout(timeout); }
  }
  return <div className={styles.contact}>
   <header className={styles.heading}><h1>WHAT’S NEXT?</h1><p>Building intelligent software, web experiences, and mobile applications.</p></header>
@@ -49,8 +53,8 @@ export default function Contact() {
    <form className={styles.form} onSubmit={submit} aria-label="Send Jethro a message">
     <div className={styles.formBar}><span>{'{}'}</span> message.json <i aria-hidden="true"/></div>
     <div className={styles.formBody}><p className={styles.comment}>Good software starts with a conversation.</p><p className={styles.bracket}>{'{'}</p>
-     {([['name','Your name'],['email','you@example.com'],['subject','Let’s build something']] as const).map(([name, placeholder]) => <label className={styles.field} key={name}><span>"{name}":</span><input name={name} type={name === 'email' ? 'email' : 'text'} placeholder={placeholder} required maxLength={name === 'subject' ? 160 : 120} autoComplete={name === 'name' ? 'name' : name === 'email' ? 'email' : 'off'}/><span className={styles.comma} aria-hidden="true">,</span></label>)}
-     <label className={`${styles.field} ${styles.messageField}`}><span>"message":</span><textarea name="message" placeholder="Tell me about your idea…" required minLength={10} maxLength={5000} rows={5}/></label>
+     {([['name','Your name'],['email','you@example.com'],['subject','Let’s build something']] as const).map(([name, placeholder]) => <label className={styles.field} key={name}><span>"{name}":</span><input name={name} type={name === 'email' ? 'email' : 'text'} placeholder={placeholder} inputMode={name === 'email' ? 'email' : 'text'} enterKeyHint="next" autoCapitalize={name === 'email' ? 'none' : 'sentences'} required maxLength={name === 'subject' ? 160 : 120} autoComplete={name === 'name' ? 'name' : name === 'email' ? 'email' : 'off'}/><span className={styles.comma} aria-hidden="true">,</span></label>)}
+     <label className={`${styles.field} ${styles.messageField}`}><span>"message":</span><textarea name="message" enterKeyHint="enter" placeholder="Tell me about your idea…" required minLength={10} maxLength={5000} rows={5}/></label>
      <label className={styles.honeypot} aria-hidden="true">Website<input name="website" tabIndex={-1} autoComplete="off"/></label><p className={styles.bracket}>{'}'}</p>
      <button type="submit" className={styles.sendButton} disabled={state === 'sending'}>{state === 'sending' ? <LoaderCircle size={15} className={styles.spin}/> : state === 'success' ? <Check size={15}/> : <Send size={15}/>}<span>{state === 'sending' ? 'Saving message…' : state === 'success' ? 'Send another message' : 'Send message'}</span><span aria-hidden="true">↵</span></button>
      <div role="status" aria-live="polite">{state === 'success' && <p className={styles.success}>Message saved to the portfolio inbox. Thanks for reaching out!</p>}{state === 'error' && <p className={styles.error}>{error}</p>}</div>
